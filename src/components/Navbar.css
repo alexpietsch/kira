@@ -1,0 +1,33 @@
+.nav-container{
+    background-color: #343A40;
+    width: 100%;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+.nav-container ul{
+    display: flex;
+    margin: 0 auto;
+    max-width: 960px;
+    align-items: center;
+    list-style: none;
+}
+
+.page-title{
+    margin-right: auto;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 1.2em;
+}
+
+.nav-container button, .nav-container a{
+    margin-left: 16px;
+}
+
+.nav-container a{
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #fff;
+    padding: 5px;
+}
