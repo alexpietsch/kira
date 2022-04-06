@@ -1,19 +1,26 @@
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
-export default function TaskAdd({ tasks, setTasks }) {
+export default function TaskAdd({ tasks, setTasks, id }) {
 
     const [taskName, setTaskName] = useState("")
     const [worker, setWorker] = useState("")
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setTasks([...tasks, {id: uuidv4(), taskName, worker}])
-        console.log(tasks)
+        if (!id) {
+            return
+        }
+
+        let newTasksArr = [...tasks]
+        newTasksArr[id].push({id: uuidv4(), taskName, worker})
+        
+        setTasks([...newTasksArr])
+        
     }
 
   return (
-    <div>
+    <>
         <form onSubmit={handleSubmit}>
             <label>
                 <span>Taskname:</span>
@@ -35,6 +42,6 @@ export default function TaskAdd({ tasks, setTasks }) {
             </label>
             <button>Task speichern</button>    
         </form>
-    </div>
+    </>
   )
 }

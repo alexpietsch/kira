@@ -31,3 +31,10 @@
     border: 1px solid #fff;
     padding: 5px;
 }
+
+.logo{
+    height: auto;
+    width: 20px;
+    margin-right: 5px;
+    padding-top: 5px;
+}

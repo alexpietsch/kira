@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-
+import { Link } from "react-router-dom";
+//import {ReactComponent as logo} from "./logo.svg";
 // styles
 import "./Navbar.css"
 
@@ -15,7 +15,8 @@ const { user } = useAuthContext()
   return (
     <nav className="nav-container">
         <ul>
-            <li className="page-title">Kira</li>
+            <li><img src="/logo.svg" alt="logo" className="logo"/></li>
+            <li className="page-title">KIRA</li>
             {!user && (
                 <>
                     <li><Link to="/login">Login</Link></li>
