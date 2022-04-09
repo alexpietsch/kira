@@ -8,13 +8,16 @@ import { useCollection } from "../../hooks/useCollection"
 import { useFirestore } from "../../hooks/useFirestore";
 
 const initialTasks = {
-  columns: [{title: "ToDo", id: "b5dff43e-81b6-43cf-aa7a-52e125c97b7c"},{title: "In Work", id: "dbdcbe1c-b3f0-4fa8-85ff-4774db63cd3d"}, {title: "Done", id: "98bffe0f-25d3-4801-b760-92eadf98f5b4"}],
+  boardId: uuidv4(),
+  boardName: "Work",
+  columns: [{title: "ToDo", id: "e3fd2ae9-6212-4495-b175-cb6241b79202"},{title: "In Work", id: "dadaef8d-bd31-4d7a-bde7-d2ae0933bf12"}, {title: "Done", id: "98bffe0f-25d3-4801-b760-92eadf98f5b4"}],
   cards: [
-    {title: "todo-1", worker: "gei", belongsTo: "b5dff43e-81b6-43cf-aa7a-52e125c97b7c"},
-    {title: "todo-2", worker: "gei", belongsTo: "b5dff43e-81b6-43cf-aa7a-52e125c97b7c"},
-    {title: "todo-3", worker: "gek", belongsTo: "b5dff43e-81b6-43cf-aa7a-52e125c97b7c"},
-    {title: "todo-61", worker: "gek", belongsTo: "dbdcbe1c-b3f0-4fa8-85ff-4774db63cd3d"}
-  ]
+    {title: "Move to new Server", worker: "gei", belongsTo: "e3fd2ae9-6212-4495-b175-cb6241b79202", id: uuidv4()},
+    {title: "Clean old code", worker: "gei", belongsTo: "e3fd2ae9-6212-4495-b175-cb6241b79202", id: uuidv4()},
+    {title: "Update version of Flux", worker: "gek", belongsTo: "e3fd2ae9-6212-4495-b175-cb6241b79202", id: uuidv4()},
+    {title: "Clean office", worker: "gek", belongsTo: "dadaef8d-bd31-4d7a-bde7-d2ae0933bf12", id: uuidv4()}
+  ],
+  user: "VdQwAs4eakWVfpxeucyf5TxE2ml2"
 }
 // [
 //   [
@@ -40,7 +43,7 @@ const initialTasks = {
 
 export default function Home() {
 
-  const { addDocument, response } = useFirestore("tasks")
+  const { addDocumentCustomId, response } = useFirestore("tasks")
   const { user } = useAuthContext()
   const { documents, error } = useCollection(
     "tasks", 
@@ -49,8 +52,8 @@ export default function Home() {
  
 
   const addToFb = () => {
-    // addDocument(initialTasks)
-    console.log(documents)
+    addDocumentCustomId(initialTasks.boardId, initialTasks)
+    // console.log(initialTasks.boardId, initialTasks)
     // const data = [...documents]
     // documents.forEach(element => {
     //   data.push(element)
