@@ -90,10 +90,11 @@ export default function ListBoard() {
             {boardData && <p>Projektname: {boardData.boardName}</p>}
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 {boardData && boardData.columns.map((column, index) => (
+                    <>
+                    <h2>{column.title}</h2>
                     <Droppable droppableId={column.id} key={column.id}>
                     {(provided, snapshot) => (
                     <ul className="con" {...provided.droppableProps} ref={provided.innerRef}>
-                        <h2>{column.title}</h2>
                         {boardData && boardData.cards.map((card, index) => {
                             if (column.id === card.belongsTo){
                                 return (
@@ -110,6 +111,7 @@ export default function ListBoard() {
                     </ul>
                     )}
                 </Droppable>
+                </>
                 ))}
             </DragDropContext>
             <TaskAdd boardId={id}/>
