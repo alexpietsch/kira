@@ -20,20 +20,27 @@
     letter-spacing: 2px;
     font-size: 1.2em;
 }
-.page-title .text{
+.page-title a{
     color: #fff;
     text-decoration: none;
 }
 
-.nav-container button, .nav-container a{
+/* .nav-container button, .nav-container a{
     margin-left: 16px;
-}
+} */
 
 .buttonLink{
-    color: #fff;
-    text-decoration: none;
     border: 1px solid #fff;
     padding: 5px;
+    width: 60px;
+}
+
+.buttonLink:last-child{
+    margin-left: 16px;
+}
+.buttonLink a{
+    color: #fff;
+    text-decoration: none;
 }
 
 .logo{
