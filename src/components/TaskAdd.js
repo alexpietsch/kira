@@ -1,29 +1,34 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { v4 as uuidv4 } from "uuid"
+import { useFirestore } from "../hooks/useFirestore"
 
-export default function TaskAdd({ tasks, setTasks, id }) {
+export default function TaskAdd({ boardData, columnId, setBoardData }) {
 
     const [taskName, setTaskName] = useState("")
     const [worker, setWorker] = useState("")
+    const { updateDocument } = useFirestore("tasks")
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!id) {
-            return
+        const newTask = {
+            belongsTo: columnId,
+            id: uuidv4(),
+            title: taskName,
+            worker
         }
-
-        let newTasksArr = [...tasks]
-        newTasksArr[id].push({id: uuidv4(), taskName, worker})
-        
-        setTasks([...newTasksArr])
-        
+        let newBoardData = boardData
+        newBoardData.cards.push(newTask)
+        setBoardData(newBoardData)
+        updateDocument(boardData.boardId, {cards: newBoardData.cards})
+        setTaskName("")
+        setWorker("")
     }
 
   return (
     <>
         <form onSubmit={handleSubmit}>
             <label>
-                <span>Taskname:</span>
+                <span>Taskname: </span>
                 <input 
                     type="text"
                     required
@@ -31,7 +36,7 @@ export default function TaskAdd({ tasks, setTasks, id }) {
                     value={taskName}
                 />
             </label>
-            <label>
+            {/* <label>
                 <span>Bearbeiter:</span>
                 <input 
                     type="text"
@@ -39,8 +44,8 @@ export default function TaskAdd({ tasks, setTasks, id }) {
                     onChange={(e) => setWorker(e.target.value)}
                     value={worker}
                 />
-            </label>
-            <button>Task speichern</button>    
+            </label> */}
+            <button>Add task</button>    
         </form>
     </>
   )

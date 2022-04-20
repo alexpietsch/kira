@@ -6,30 +6,48 @@
     list-style: none;
 } */
 
+.list-container{
+    display: flex;
+}
 .list-container ul{
     list-style: none;
+}
+
+.taskColumn{
+    margin: 10px;
 }
 
 .taskCard {
     padding: 1em;
     border: 2px solid black;
     background-color: #fff;
+    margin-bottom: .5em;
+    word-wrap: break-word;
+    max-width: 500px;
+}
+
+.addCard {
+    padding: 1em;
+    border: 2px dotted rgb(109, 109, 109);
+    background-color: #fff;
     width: 300px;
     margin-bottom: .5em;
 }
 
-.list-container div{
+.taskCard p{
+    margin: 0;
+}
+
+/* .list-container div{
     min-width: 5vw;
     margin-left: 2vw;
     padding-left: auto;
     padding-right: auto;
-    /* padding-top: 5vw;
-    padding-bottom: 5vw; */
     min-height: 30vh;
     height: fit-content;
     border: 2px solid black;
     border-radius: 10px;
-}
+} */
 
 .taskCard-worker{
     color: #949494;
@@ -38,4 +56,5 @@
 
 .con{
     border: 2px dashed gray;
+    padding: 1em;
 }

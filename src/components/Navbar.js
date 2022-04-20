@@ -16,11 +16,11 @@ const { user } = useAuthContext()
     <nav className="nav-container">
         <ul>
             <li><img src="/logo.svg" alt="logo" className="logo"/></li>
-            <li className="page-title">KIRA</li>
+            <li className="page-title"><Link to="/" className="text">Kira</Link></li>
             {!user && (
                 <>
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/signup">Signup</Link></li>
+                    <li className="buttonLink"><Link to="/login">Login</Link></li>
+                    <li className="buttonLink"><Link to="/signup">Signup</Link></li>
                 </>
             )}
             {user && (

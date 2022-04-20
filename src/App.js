@@ -19,7 +19,6 @@ import ListBoard from './components/ListBoard';
 function App() {
 
   const { authIsReady, user } = useAuthContext()
-  console.log(user)
 
   return (
     <div className="App">

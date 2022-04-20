@@ -17,15 +17,19 @@
 .page-title{
     margin-right: auto;
     font-weight: bold;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     font-size: 1.2em;
+}
+.page-title .text{
+    color: #fff;
+    text-decoration: none;
 }
 
 .nav-container button, .nav-container a{
     margin-left: 16px;
 }
 
-.nav-container a{
+.buttonLink{
     color: #fff;
     text-decoration: none;
     border: 1px solid #fff;
