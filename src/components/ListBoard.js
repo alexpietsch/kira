@@ -112,7 +112,6 @@ export default function ListBoard() {
                 {boardData && boardData.columns.map((column, index) => (
                     <div key={column.id} className="taskColumn" style={columnWidth}>
                         <h2>{column.title}</h2>
-                        {/* <h5>{column.id}</h5> */}
                         <TaskAdd boardData={boardData} columnId={column.id} setBoardData={setBoardData} />
                     
                         <Droppable droppableId={column.id}>
@@ -126,7 +125,6 @@ export default function ListBoard() {
                                                 <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                                                     <p>{card.title}</p>
                                                     <button onClick={() => handleDeleteCard(card)}>X</button>
-                                                    {/* <p>Worked on by: {card.worker}</p> */}
                                                 </li>
                                             )}
                                         </Draggable>
@@ -141,7 +139,6 @@ export default function ListBoard() {
             </DragDropContext>
             </>
         }
-        
     </div>
     </>
     
