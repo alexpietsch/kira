@@ -26,7 +26,7 @@ export default function Home() {
   const { addDocumentCustomId, response } = useFirestore("tasks")
   const { user } = useAuthContext()
   const { documents, error } = useCollection(
-    "tasks", 
+    "tasks_new_structure", 
     ["user", "==", user.uid])
   // const [ userData, setUserData ] = useState([...documents])
  

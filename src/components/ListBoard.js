@@ -46,8 +46,8 @@ export default function ListBoard() {
     const { user } = useAuthContext()
     const { id } = useParams()
     const { documents, error } = useCollection(
-        "tasks", 
-        ["boardId", "==", id]
+        "tasks_new_structure", 
+        ["boardID", "==", id]
     )
     const { updateDocument } = useFirestore("tasks")
 
@@ -56,21 +56,23 @@ export default function ListBoard() {
     let columnWidthDiff = null
     if(documents){
         data = documents[0]
-        let colwidth = Math.floor(100/data.columns.length)
-        let diff = 100 - colwidth*data.columns.length
-        columnWidth = {
-            width: colwidth + "%"
-        }
-        columnWidthDiff = {
-            paddingLeft: diff/2 + "%",
-            paddingRight: diff/2 + "%"
-        }
+        console.log(documents)
+    //     let colwidth = Math.floor(100/data.columns.length)
+    //     let diff = 100 - colwidth*data.columns.length
+    //     columnWidth = {
+    //         width: colwidth + "%"
+    //     }
+    //     columnWidthDiff = {
+    //         paddingLeft: diff/2 + "%",
+    //         paddingRight: diff/2 + "%"
+    //     }
     }
 
     
     const [boardData, setBoardData] = useState(null)
     const fetch = useEffect(() => {
         setBoardData(data)
+        console.log(data)
     }, [data])
 
     function handleOnDragEnd(result) {
