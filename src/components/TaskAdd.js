@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import { useFirestore } from "../hooks/useFirestore"
 import { timestamp } from "../firebase/config"
 
-export default function TaskAdd({ boardData, columnId, setBoardData }) {
+export default function TaskAdd({ boardData, columnId, setBoardData, setIsModalOpen }) {
 
     const [taskName, setTaskName] = useState("")
     const [worker, setWorker] = useState("")
@@ -20,6 +20,7 @@ export default function TaskAdd({ boardData, columnId, setBoardData }) {
             cardCreated: timestamp.fromDate(new Date()),
             cardLabels: [
                 {
+                    labelID: uuidv4(),
                     labelName: "test",
                     labelColor: "e03857"
                 }
@@ -38,6 +39,7 @@ export default function TaskAdd({ boardData, columnId, setBoardData }) {
         updateDocument(boardData.boardID, {columns: newBoardData.columns})
         setTaskName("")
         setWorker("")
+        setIsModalOpen(false)
     }
 
   return (

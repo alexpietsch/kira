@@ -16,10 +16,12 @@ DOCUMENT
                         cardWorker: STRING
                         cardDeadline: TIMESTAMP
                         cardCreated: TIMESTAMP
+						cardIsDone: BOOLEAN
                         cardLabels: ARRAY
                         [
                             label: OBJECT
                             {
+								labelID: STRING
                                 labelName: STRING
                                 labelColor: STRING
                             }
@@ -29,3 +31,4 @@ DOCUMENT
             }
         ]
     user: STRING
+	

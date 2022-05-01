@@ -56,29 +56,25 @@ export default function ListBoard() {
     let columnWidthDiff = null
     if(documents){
         data = documents[0]
-    //     let colwidth = Math.floor(100/data.columns.length)
-    //     let diff = 100 - colwidth*data.columns.length
-    //     columnWidth = {
-    //         width: colwidth + "%"
-    //     }
-    //     columnWidthDiff = {
-    //         paddingLeft: diff/2 + "%",
-    //         paddingRight: diff/2 + "%"
-    //     }
     }
 
     
     const [boardData, setBoardData] = useState(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const fetch = useEffect(() => {
         setBoardData(data)
-        console.log(data)
     }, [data])
 
     function handleOnDragEnd(result) {
 
         const { source, destination } = result;
-        console.log(source,destination)
+        // check if the card is dropped outside of the column area
         if(!destination){
+            return
+        } 
+        // check if the card is dropped in the same column and the index
+        // does not change (case if card is dragged and then dropped at the same position)
+        else if(source.droppableId === destination.droppableId && source.index === destination.index){
             return
         }
 
@@ -112,11 +108,14 @@ export default function ListBoard() {
         setBoardData(newState)
         updateDocument(boardData.boardID, {columns: newState.columns})
     }
-    function handleDeleteCard(card){
-        // let newState = boardData
-        // newState.cards = newState.cards.filter(c => c.id !== card.id)
-        // setBoardData(newState)
-        // updateDocument(boardData.boardId, {cards: newState.cards})
+
+    function handleDeleteCard(sourceColumn, sourceCard){
+        let newState = boardData
+        const isTargetColumn = (column) => column.columnID === sourceColumn.columnID
+        const indexOfColumn = newState.columns.findIndex(isTargetColumn)
+        newState.columns[indexOfColumn].cards = newState.columns[indexOfColumn].cards.filter(c => c.cardID !== sourceCard.cardID)
+        setBoardData(newState)
+        updateDocument(boardData.boardID, {columns: newState.columns})
     }
   return (
     <>
@@ -127,9 +126,11 @@ export default function ListBoard() {
                 {boardData && boardData.columns.map((column, index) => (
                     <div key={column.columnID} className="taskColumn" style={columnWidth}>
                         <h2>{column.columnName}</h2>
-
-                        <TaskAdd boardData={boardData} columnId={column.columnID} setBoardData={setBoardData} />
-                    
+                        {isModalOpen && 
+                            <Modal>
+                                <TaskAdd boardData={boardData} columnId={column.columnID} setBoardData={setBoardData} setIsModalOpen={setIsModalOpen} />
+                                <button onClick={() => setIsModalOpen(false)}>Close</button>
+                            </Modal>}
                         <Droppable droppableId={column.columnID}>
                         {(provided) => (
                         <ul className="con" {...provided.droppableProps} ref={provided.innerRef}>
@@ -140,7 +141,13 @@ export default function ListBoard() {
                                                 <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                                                     <p>{card.cardName}</p>
                                                     {/* <p>{card.cardDeadline ? console.log(card.cardDeadline.toDate().toString().toLocaleString('en-US')) : null}</p> */}
-                                                    <span className="deleteButton" onClick={() => console.log("del")}>✕</span>
+                                                    <span className="deleteButton" onClick={() => handleDeleteCard(column, card)}>✕</span>
+                                                    <div className="labelWrapper">
+                                                        {card.cardLabels.map((label, index) => {
+                                                            return (
+                                                                <span key={label.labelID} className="label" style={{backgroundColor: "#"+label.labelColor}}>{label.labelName}</span>
+                                                            )})}
+                                                    </div>
                                                 </li>
                                             )}
                                         </Draggable>
@@ -150,6 +157,7 @@ export default function ListBoard() {
                         </ul>
                         )}
                     </Droppable>
+                    <button onClick={() => setIsModalOpen(true)}>Add Task</button>
                 </div>
                 ))}
             </DragDropContext>

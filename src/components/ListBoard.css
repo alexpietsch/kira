@@ -7,6 +7,8 @@
 
 .taskColumn{
     margin: 10px;
+    width: 350px;
+    min-width: 150px;
 }
 
 .taskCard {
@@ -17,7 +19,6 @@
     word-wrap: break-word;
     max-width: 500px;
     position: relative;
-    
 }
 
 
@@ -31,8 +32,21 @@
     right: 0;
     cursor: pointer;
     margin-top: -0.3em;
-    /* border-left: 2px solid red;
-    border-bottom: 2px solid red; */
+}
+
+.labelWrapper{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.labelWrapper .label{
+    background-color: #fff;
+    padding: .3em;
+    margin: -.2em .3em -.8em .1em;
+    border-radius: 5px;
+    font-size: .7em;
+    font-weight: normal;
+    color: #fff;
 }
 
 
