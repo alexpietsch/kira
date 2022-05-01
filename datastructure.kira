@@ -1,0 +1,34 @@
+DOCUMENT
+    boardID: STRING
+    boardName: STRING
+    columns: ARRAY
+        [
+            column: OBJECT
+            {
+                columnID: STRING
+                columnName: STRING
+                cards: ARRAY
+                [
+                    card: OBJECT
+                    {
+                        cardID: STRING
+                        cardName: STRING
+                        cardWorker: STRING
+                        cardDeadline: TIMESTAMP
+                        cardCreated: TIMESTAMP
+						cardIsDone: BOOLEAN
+                        cardLabels: ARRAY
+                        [
+                            label: OBJECT
+                            {
+								labelID: STRING
+                                labelName: STRING
+                                labelColor: STRING
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    user: STRING
+	
