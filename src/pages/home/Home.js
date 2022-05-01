@@ -1,5 +1,5 @@
 import ListBoard from "../../components/ListBoard";
-import Test from "../../components/Test";
+import BoardSelection from "../../components/BoardSelection";
 import { v4 as uuidv4 } from "uuid"
 import { useState } from "react";
 import TaskAdd from "../../components/TaskAdd";
@@ -26,7 +26,7 @@ export default function Home() {
   const { addDocumentCustomId, response } = useFirestore("tasks")
   const { user } = useAuthContext()
   const { documents, error } = useCollection(
-    "tasks", 
+    "tasks_new_structure", 
     ["user", "==", user.uid])
   // const [ userData, setUserData ] = useState([...documents])
  
@@ -58,7 +58,7 @@ export default function Home() {
     <div>
       {/* <button onClick={addToFb}>get</button> */}
       <br />
-      {documents && <Test data={documents} />}
+      {documents && <BoardSelection data={documents} />}
       {!documents && <p>Loading...</p>}
       {/* <TaskAdd tasks={tasks} setTasks={setTasks} />
       <ListBoard tasks={tasks} setTasks={setTasks} /> */}

@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useLogin } from "../../hooks/useLogin"
 
 
-
 export default function Login() {
 
   const [email, setEmail] = useState("")
@@ -15,7 +14,7 @@ export default function Login() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
       <h2>Login</h2>
       <label>
         <span>E-Mail:</span>

@@ -1,27 +1,45 @@
 import { useState, useRef } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { useFirestore } from "../hooks/useFirestore"
+import { timestamp } from "../firebase/config"
 
-export default function TaskAdd({ boardData, columnId, setBoardData }) {
+export default function TaskAdd({ boardData, columnId, setBoardData, setIsModalOpen }) {
 
     const [taskName, setTaskName] = useState("")
     const [worker, setWorker] = useState("")
-    const { updateDocument } = useFirestore("tasks")
+    const { updateDocument } = useFirestore("tasks_new_structure")
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const newTask = {
-            belongsTo: columnId,
-            id: uuidv4(),
-            title: taskName,
-            worker
+
+        const card = {
+            cardID: uuidv4(),
+            cardName: taskName,
+            cardWorker: worker,
+            cardDeadline: null,
+            cardCreated: timestamp.fromDate(new Date()),
+            cardLabels: [
+                {
+                    labelID: uuidv4(),
+                    labelName: "test",
+                    labelColor: "e03857"
+                }
+            ]
+
         }
         let newBoardData = boardData
-        newBoardData.cards.push(newTask)
+        // get column from boardData.columns 
+        const column = newBoardData.columns.find(column => column.columnID === columnId)
+        // add new task to column
+        column.cards.push(card)
+        const isTargetColumn = (column) => column.columnID === columnId
+        const indexOfColumn = newBoardData.columns.findIndex(isTargetColumn)
+        newBoardData.columns[indexOfColumn] = column
         setBoardData(newBoardData)
-        updateDocument(boardData.boardId, {cards: newBoardData.cards})
+        updateDocument(boardData.boardID, {columns: newBoardData.columns})
         setTaskName("")
         setWorker("")
+        setIsModalOpen(false)
     }
 
   return (
