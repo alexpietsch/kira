@@ -36,17 +36,22 @@
 
 .labelWrapper{
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
+    flex-grow: 0;
 }
 
 .labelWrapper .label{
     background-color: #fff;
     padding: .3em;
-    margin: -.2em .3em -.8em .1em;
+    margin: .2em .3em .5em .1em;
     border-radius: 5px;
     font-size: .7em;
     font-weight: normal;
     color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 85px;
 }
 
 

@@ -125,9 +125,8 @@ export default function ListBoard() {
     <>
     {boardData && <p>Projektname: {boardData.boardName}</p>}
     {isModalOpen && 
-        <Modal>
+        <Modal customWidth={"80%"} isCenter={true}>
             <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} setIsModalOpen={setIsModalOpen} />
-            <button className="button-dark" onClick={() => setIsModalOpen(false)}>Close</button>
         </Modal>}
     <div className="list-container" style={columnWidthDiff}>
         {!error && <>
@@ -152,9 +151,9 @@ export default function ListBoard() {
                                                         {/* <p>{card.cardDeadline ? console.log(card.cardDeadline.toDate().toString().toLocaleString('en-US')) : null}</p> */}
                                                         <span className="deleteButton" onClick={() => handleDeleteCard(column, card)}>✕</span>
                                                         <div className="labelWrapper">
-                                                            {card.cardLabels.map((label, index) => {
+                                                            {card.cardLabels.map((label) => {
                                                                 return (
-                                                                    <span key={label.labelID} className="label" style={{backgroundColor: "#"+label.labelColor}}>{label.labelName}</span>
+                                                                    <span key={label.labelID} className="label" style={{backgroundColor: label.labelColor.charAt(0)==="#" ? label.labelColor : "#"+label.labelColor}}>{label.labelName}</span>
                                                                 )})}
                                                         </div>
                                                     </li>
