@@ -5,8 +5,8 @@ import { timestamp } from "../firebase/config"
 
 export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourceColumnID }) {
 
-    const [taskName, setTaskName] = useState("")
-    const [worker, setWorker] = useState("")
+    const [cardName, setCardName] = useState("")
+    const [cardWorker, setCardWorker] = useState("")
     const [deadline, setDeadline] = useState("")
     const { updateDocument } = useFirestore("tasks_new_structure")
 
@@ -14,17 +14,11 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
         e.preventDefault()
         const card = {
             cardID: uuidv4(),
-            cardName: taskName,
-            cardWorker: worker,
+            cardName,
+            cardWorker,
             cardDeadline: deadline ? timestamp.fromDate(new Date(deadline)) : null,
             cardCreated: timestamp.fromDate(new Date()),
-            cardLabels: [
-                {
-                    labelID: uuidv4(),
-                    labelName: "test",
-                    labelColor: "e03857"
-                }
-            ]
+            cardLabels: []
 
         }
         let newBoardData = boardData
@@ -36,9 +30,9 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
         const indexOfColumn = newBoardData.columns.findIndex(isTargetColumn)
         newBoardData.columns[indexOfColumn] = column
         setBoardData(newBoardData)
-        updateDocument(boardData.boardID, {columns: newBoardData.columns})
-        setTaskName("")
-        setWorker("")
+        // updateDocument(boardData.boardID, {columns: newBoardData.columns})
+        setCardName("")
+        setCardWorker("")
         setIsModalOpen(false)
     }
 
@@ -50,8 +44,8 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
                 <input 
                     type="text"
                     required
-                    onChange={(e) => setTaskName(e.target.value)}
-                    value={taskName}
+                    onChange={(e) => setCardName(e.target.value)}
+                    value={cardName}
                 />
             </label>
             <br/>
@@ -59,9 +53,8 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
                 <span>Bearbeiter:</span>
                 <input 
                     type="text"
-                    required
-                    onChange={(e) => setWorker(e.target.value)}
-                    value={worker}
+                    onChange={(e) => setCardWorker(e.target.value)}
+                    value={cardWorker}
                 />
             </label>
             <br/>
@@ -69,7 +62,6 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
                 <span>Deadline:</span>
                 <input 
                     type="date"
-                    required
                     onChange={(e) => setDeadline(e.target.value)}
                     value={deadline}
                 />
