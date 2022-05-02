@@ -61,6 +61,7 @@ export default function ListBoard() {
     
     const [boardData, setBoardData] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [modalActiveColumn, setModalActiveColumn] = useState(null)
     const fetch = useEffect(() => {
         setBoardData(data)
     }, [data])
@@ -117,47 +118,55 @@ export default function ListBoard() {
         setBoardData(newState)
         updateDocument(boardData.boardID, {columns: newState.columns})
     }
+    /* function handleOpenModal(){
+        
+    } */
   return (
     <>
     {boardData && <p>Projektname: {boardData.boardName}</p>}
+    {isModalOpen && 
+        <Modal>
+            <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} setIsModalOpen={setIsModalOpen} />
+            <button className="button-dark" onClick={() => setIsModalOpen(false)}>Close</button>
+        </Modal>}
     <div className="list-container" style={columnWidthDiff}>
         {!error && <>
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 {boardData && boardData.columns.map((column, index) => (
                     <div key={column.columnID} className="taskColumn" style={columnWidth}>
                         <h2>{column.columnName}</h2>
-                        {isModalOpen && 
-                            <Modal>
-                                <TaskAdd boardData={boardData} columnId={column.columnID} setBoardData={setBoardData} setIsModalOpen={setIsModalOpen} />
-                                <button onClick={() => setIsModalOpen(false)}>Close</button>
-                            </Modal>}
                         <Droppable droppableId={column.columnID}>
                         {(provided) => (
-                        <ul className="con" {...provided.droppableProps} ref={provided.innerRef}>
-                            {boardData && column.cards.map((card, index) => {
-                                    return (
-                                        <Draggable key={card.cardID} draggableId={card.cardID} index={index}>
-                                            {(provided) => (
-                                                <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                                    <p>{card.cardName}</p>
-                                                    {/* <p>{card.cardDeadline ? console.log(card.cardDeadline.toDate().toString().toLocaleString('en-US')) : null}</p> */}
-                                                    <span className="deleteButton" onClick={() => handleDeleteCard(column, card)}>✕</span>
-                                                    <div className="labelWrapper">
-                                                        {card.cardLabels.map((label, index) => {
-                                                            return (
-                                                                <span key={label.labelID} className="label" style={{backgroundColor: "#"+label.labelColor}}>{label.labelName}</span>
-                                                            )})}
-                                                    </div>
-                                                </li>
-                                            )}
-                                        </Draggable>
-                                    ); 
-                            })}
-                            {provided.placeholder}
-                        </ul>
+                        <>
+                            <button className="button-dark" onClick={() => {
+                                setIsModalOpen(true)
+                                setModalActiveColumn(column.columnID)
+                            }}>Add Task</button>
+                            <ul className="con" {...provided.droppableProps} ref={provided.innerRef}>
+                                {boardData && column.cards.map((card, index) => {
+                                        return (
+                                            <Draggable key={card.cardID} draggableId={card.cardID} index={index}>
+                                                {(provided) => (
+                                                    <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                                        <p>{card.cardName}</p>
+                                                        {/* <p>{card.cardDeadline ? console.log(card.cardDeadline.toDate().toString().toLocaleString('en-US')) : null}</p> */}
+                                                        <span className="deleteButton" onClick={() => handleDeleteCard(column, card)}>✕</span>
+                                                        <div className="labelWrapper">
+                                                            {card.cardLabels.map((label, index) => {
+                                                                return (
+                                                                    <span key={label.labelID} className="label" style={{backgroundColor: "#"+label.labelColor}}>{label.labelName}</span>
+                                                                )})}
+                                                        </div>
+                                                    </li>
+                                                )}
+                                            </Draggable>
+                                        ); 
+                                })}
+                                {provided.placeholder}
+                            </ul>
+                        </>
                         )}
                     </Droppable>
-                    <button onClick={() => setIsModalOpen(true)}>Add Task</button>
                 </div>
                 ))}
             </DragDropContext>
