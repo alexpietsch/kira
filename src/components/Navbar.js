@@ -26,7 +26,7 @@ const { user } = useAuthContext()
             {user && (
                 <>
                     <li>Logged in as {user.displayName}</li>
-                    <li style={{marginLeft: "16px"}}><button onClick={logout}>Logout</button></li>
+                    <li style={{marginLeft: "16px"}}><button className="button-light" onClick={logout}>Logout</button></li>
                 </>
             )}
         </ul>
