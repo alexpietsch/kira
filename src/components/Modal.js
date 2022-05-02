@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom'
 import './Modal.css'
 
-export default function Modal({ children }) {
+export default function Modal({ children, customWidth }) {
   return ReactDOM.createPortal((
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className="modal" style={{ width: customWidth}}>
         {children}
       </div>
     </div>
