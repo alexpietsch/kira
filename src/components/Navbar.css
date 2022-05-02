@@ -30,13 +30,12 @@
     padding: 5px;
     width: 60px;
 }
-
-.buttonLink:last-child{
-    margin-left: 16px;
-}
 .buttonLink a{
     color: #fff;
     text-decoration: none;
+}
+.buttonLink:last-child{
+    margin-left: 16px;
 }
 
 .logo{
