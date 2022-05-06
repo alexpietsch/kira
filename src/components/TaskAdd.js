@@ -2,7 +2,7 @@ import { useState, useRef } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { useFirestore } from "../hooks/useFirestore"
 import { timestamp } from "../firebase/config"
-import { ChromePicker } from 'react-color'
+import { GithubPicker } from 'react-color'
 
 import "./TaskAdd.css"
 import Modal from "./Modal"
@@ -18,7 +18,8 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
     const [cardLabels, setCardLabels] = useState([])
 
     const [newCardLabelName, setNewCardLabelName] = useState("")
-    const [newCardLabelColor, setNewCardLabelColor] = useState("FF0003")
+    const [newCardLabelNameColor, setNewCardLabelNameColor] = useState("#fff")
+    const [newCardLabelColor, setNewCardLabelColor] = useState("#b80000")
     const { updateDocument } = useFirestore("tasks_new_structure")
 
     function handleSubmit(e){
@@ -49,12 +50,14 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
         e.preventDefault()
         const labelName = newCardLabelName.trim()
         const labelColor = newCardLabelColor.trim()
+        const labelTextColor = newCardLabelNameColor.trim()
 
         if(labelName && !cardLabels.filter((label) => label.labelName === labelName).length > 0){
-            setCardLabels(prevLabels => [...prevLabels, {labelID: uuidv4(), labelName, labelColor}])
+            setCardLabels(prevLabels => [...prevLabels, {labelID: uuidv4(), labelName, labelColor, labelTextColor}])
         }
         setNewCardLabelName("")
-        setNewCardLabelColor("")
+        setNewCardLabelColor("#b80000")
+        setNewCardLabelNameColor("#fff")
         setShowLabelCreator(false)
     }
     function handleCloseModal(){
@@ -107,17 +110,26 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
                 {showLabelCreator &&
                     <Modal customWidth={"40%"}> 
                         <div className="">
-                            <span>Label name:</span>
-                            <input 
-                                type="text"
-                                onChange={(e) => setNewCardLabelName(e.target.value)}
-                                value={newCardLabelName}
-                                />
-                            <br/>
-                            <span>Label Color</span>
-                                <ChromePicker
-                                    color={newCardLabelColor}
-                                    onChangeComplete={(color) => setNewCardLabelColor(color.hex)} />
+                            <span>Label:</span>
+                                <input
+                                    className="labelNameInput"
+                                    type="text"
+                                    onChange={(e) => {
+                                        setNewCardLabelName(e.target.value)
+                                    }}
+                                    value={newCardLabelName}
+                                    style={{backgroundColor: newCardLabelColor, color: newCardLabelNameColor}}
+                                    />
+                            
+                            <GithubPicker
+                                className="colorPicker"
+                                color={newCardLabelColor}
+                                triangle="top-right"
+                                onChangeComplete={(color) => {
+                                    setNewCardLabelColor(color.hex)
+                                    console.log(color.hex);
+                                    color.hsl.l >= 0.5 ?  setNewCardLabelNameColor("#000") : setNewCardLabelNameColor("#fff") 
+                                }} />
                             <br/>
                             <button onClick={handleAdd} className="button-dark labelAdd">add</button>
                         </div>
@@ -125,7 +137,7 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
                     </Modal>}
             </label>
             <p className="labelWrapper">{cardLabels.map((label) => (
-                <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor}}>{label.labelName}</span>
+                <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}</span>
             ))}
                 <button className="addLabel" onClick={(e) => {
                     e.preventDefault()

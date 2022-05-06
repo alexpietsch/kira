@@ -24,6 +24,7 @@ DOCUMENT
 								labelID: STRING
                                 labelName: STRING
                                 labelColor: STRING
+                                labelTextColor: STRING
                             }
                         ]
                     }

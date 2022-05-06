@@ -153,7 +153,7 @@ export default function ListBoard() {
                                                         <div className="labelWrapper">
                                                             {card.cardLabels.map((label) => {
                                                                 return (
-                                                                    <span key={label.labelID} className="label" style={{backgroundColor: label.labelColor.charAt(0)==="#" ? label.labelColor : "#"+label.labelColor}}>{label.labelName}</span>
+                                                                    <span key={label.labelID} className="label" style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}</span>
                                                                 )})}
                                                         </div>
                                                     </li>
