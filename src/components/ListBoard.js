@@ -60,7 +60,7 @@ export default function ListBoard() {
 
     
     const [boardData, setBoardData] = useState(null)
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isTaskAddModalOpen, setIsTaskAddModalOpen] = useState(false)
     const [modalActiveColumn, setModalActiveColumn] = useState(null)
     const fetch = useEffect(() => {
         setBoardData(data)
@@ -124,10 +124,11 @@ export default function ListBoard() {
   return (
     <>
     {boardData && <p>Projektname: {boardData.boardName}</p>}
-    {isModalOpen && 
+    {isTaskAddModalOpen && 
         <Modal customWidth={"80%"} isCenter={true}>
-            <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} setIsModalOpen={setIsModalOpen} />
+            <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />
         </Modal>}
+    
     <div className="list-container" style={columnWidthDiff}>
         {!error && <>
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -138,7 +139,7 @@ export default function ListBoard() {
                         {(provided) => (
                         <>
                             <button className="button-dark" onClick={() => {
-                                setIsModalOpen(true)
+                                setIsTaskAddModalOpen(true)
                                 setModalActiveColumn(column.columnID)
                             }}>Add Task</button>
                             <ul className="con" {...provided.droppableProps} ref={provided.innerRef}>
@@ -146,7 +147,7 @@ export default function ListBoard() {
                                         return (
                                             <Draggable key={card.cardID} draggableId={card.cardID} index={index}>
                                                 {(provided) => (
-                                                    <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                                    <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} onDoubleClick={() => setIsTaskAddModalOpen(true)}>
                                                         <p>{card.cardName}</p>
                                                         {/* <p>{card.cardDeadline ? console.log(card.cardDeadline.toDate().toString().toLocaleString('en-US')) : null}</p> */}
                                                         <span className="deleteButton" onClick={() => handleDeleteCard(column, card)}>✕</span>

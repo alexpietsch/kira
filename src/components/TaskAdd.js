@@ -7,7 +7,7 @@ import { GithubPicker } from 'react-color'
 import "./TaskAdd.css"
 import Modal from "./Modal"
 
-export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourceColumnID }) {
+export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen, sourceColumnID }) {
 
     const [showLabelCreator, setShowLabelCreator] = useState(false)
     const [showConfirmModal, setShowConfirmModal] = useState(false)
@@ -15,6 +15,7 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
     const [cardName, setCardName] = useState("")
     const [cardWorker, setCardWorker] = useState("")
     const [deadline, setDeadline] = useState("")
+    const [cardDescription, setCardDescription] = useState("")
     const [cardLabels, setCardLabels] = useState([])
 
     const [newCardLabelName, setNewCardLabelName] = useState("")
@@ -30,6 +31,7 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
             cardWorker,
             cardDeadline: deadline ? timestamp.fromDate(new Date(deadline)) : null,
             cardCreated: timestamp.fromDate(new Date()),
+            cardDescription,
             cardLabels
         }
         let newBoardData = boardData
@@ -44,7 +46,10 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
         // updateDocument(boardData.boardID, {columns: newBoardData.columns})
         setCardName("")
         setCardWorker("")
-        setIsModalOpen(false)
+        setDeadline("")
+        setCardDescription("")
+        setCardLabels([])
+        setIsTaskAddModalOpen(false)
     }
     function handleAdd(e){
         e.preventDefault()
@@ -64,7 +69,7 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
         if(cardName || cardWorker || deadline || cardLabels.length > 0){
             setShowConfirmModal(true)
         } else {
-            setIsModalOpen(false)
+            setIsTaskAddModalOpen(false)
         }
     }
   return (
@@ -72,7 +77,7 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
         {showConfirmModal && 
             <Modal customWidth={"30%"}>
                 <h1>Close Window?</h1>
-                <button className="button-dark" onClick={() => setIsModalOpen(false)}>Yes</button>
+                <button className="button-dark" onClick={() => setIsTaskAddModalOpen(false)}>Yes</button>
                 <button className="button-dark" onClick={() => setShowConfirmModal(false)}>No</button>
             </Modal>}
         
@@ -102,6 +107,16 @@ export default function TaskAdd({ boardData, setBoardData, setIsModalOpen, sourc
                     type="date"
                     onChange={(e) => setDeadline(e.target.value)}
                     value={deadline}
+                />
+            </label>
+            <label>
+                <span>Description</span>
+                <textarea
+                    onChange={(e) => setCardDescription(e.target.value)}
+                    value={cardDescription}
+                    rows="5"
+                    cols="50"
+                    style={{resize: "none"}}
                 />
             </label>
             <br/>

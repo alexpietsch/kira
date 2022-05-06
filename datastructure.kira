@@ -17,6 +17,7 @@ DOCUMENT
                         cardDeadline: TIMESTAMP
                         cardCreated: TIMESTAMP
 						cardIsDone: BOOLEAN
+                        cardDescription: STRING
                         cardLabels: ARRAY
                         [
                             label: OBJECT
