@@ -16,7 +16,7 @@ DOCUMENT
                         cardWorker: STRING
                         cardDeadline: TIMESTAMP
                         cardCreated: TIMESTAMP
-						cardIsDone: BOOLEAN
+                        cardIsDone: BOOLEAN
                         cardDescription: STRING
                         cardLabels: ARRAY
                         [
