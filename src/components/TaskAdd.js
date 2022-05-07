@@ -43,7 +43,7 @@ export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen
         const indexOfColumn = newBoardData.columns.findIndex(isTargetColumn)
         newBoardData.columns[indexOfColumn] = column
         setBoardData(newBoardData)
-        // updateDocument(boardData.boardID, {columns: newBoardData.columns})
+        updateDocument(boardData.boardID, {columns: newBoardData.columns})
         setCardName("")
         setCardWorker("")
         setDeadline("")

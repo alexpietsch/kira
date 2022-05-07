@@ -61,6 +61,8 @@ export default function ListBoard() {
     
     const [boardData, setBoardData] = useState(null)
     const [isTaskAddModalOpen, setIsTaskAddModalOpen] = useState(false)
+    const [isCardModalOpen, setIsCardModalOpen] = useState(false)
+
     const [modalActiveColumn, setModalActiveColumn] = useState(null)
     const fetch = useEffect(() => {
         setBoardData(data)
@@ -128,7 +130,11 @@ export default function ListBoard() {
         <Modal customWidth={"80%"} isCenter={true}>
             <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />
         </Modal>}
-    
+    {isCardModalOpen &&
+        <Modal customWidth={"80%"} isCenter={true}>
+            <h1>Edit and view card here</h1>
+            <button onClick={() => setIsCardModalOpen(false)}>Close</button>
+        </Modal>}
     <div className="list-container" style={columnWidthDiff}>
         {!error && <>
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -147,7 +153,7 @@ export default function ListBoard() {
                                         return (
                                             <Draggable key={card.cardID} draggableId={card.cardID} index={index}>
                                                 {(provided) => (
-                                                    <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} onDoubleClick={() => setIsTaskAddModalOpen(true)}>
+                                                    <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} onDoubleClick={() => setIsCardModalOpen(true)}>
                                                         <p>{card.cardName}</p>
                                                         {/* <p>{card.cardDeadline ? console.log(card.cardDeadline.toDate().toString().toLocaleString('en-US')) : null}</p> */}
                                                         <span className="deleteButton" onClick={() => handleDeleteCard(column, card)}>✕</span>
