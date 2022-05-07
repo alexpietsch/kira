@@ -16,7 +16,8 @@ DOCUMENT
                         cardWorker: STRING
                         cardDeadline: TIMESTAMP
                         cardCreated: TIMESTAMP
-						cardIsDone: BOOLEAN
+                        cardIsDone: BOOLEAN
+                        cardDescription: STRING
                         cardLabels: ARRAY
                         [
                             label: OBJECT
@@ -24,6 +25,7 @@ DOCUMENT
 								labelID: STRING
                                 labelName: STRING
                                 labelColor: STRING
+                                labelTextColor: STRING
                             }
                         ]
                     }
