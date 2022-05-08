@@ -39,5 +39,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-beautiful-dnd": "^13.1.2",
+    "@types/react-color": "^3.0.6",
+    "@types/react-router-dom": "^5.3.3"
   }
 }

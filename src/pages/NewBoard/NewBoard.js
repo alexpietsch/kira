@@ -1,11 +1,13 @@
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useFirestore } from "../../hooks/useFirestore";
 import { useState } from "react"
+import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"
 
 export default function NewBoard() {
     const { user } = useAuthContext()
     const { addDocumentCustomId, response } = useFirestore("tasks_new_structure")
+    const history = useHistory();
 
     const [boardName, setBoardName] = useState("")
     const [boardDescription, setBoardDescription] = useState("")
@@ -23,6 +25,7 @@ export default function NewBoard() {
         setBoardName("")
         setBoardDescription("")
         addDocumentCustomId(board.boardID, board)
+        history.push("/")
     }
 
   return (
