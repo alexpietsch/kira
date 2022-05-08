@@ -10,6 +10,9 @@ export default function BoardSelection({data}) {
                 <Link to={`/board/${board.boardID}`}>Open this board</Link>
             </div>
         ))}
+        <div>
+            <Link to="/new">Create a new board</Link>
+        </div>
     </div>
   )
 }

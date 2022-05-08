@@ -47,7 +47,8 @@ export default function ListBoard() {
     const { id } = useParams()
     const { documents, error } = useCollection(
         "tasks_new_structure", 
-        ["boardID", "==", id]
+        ["boardID", "==", id],
+        user
     )
     const { updateDocument } = useFirestore("tasks_new_structure")
 

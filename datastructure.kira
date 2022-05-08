@@ -1,6 +1,13 @@
 DOCUMENT
     boardID: STRING
     boardName: STRING
+    boardMember: ARRAY
+        [
+            member: OBJECT
+            {
+                user: STRING
+            }
+        ]
     columns: ARRAY
         [
             column: OBJECT
@@ -22,7 +29,7 @@ DOCUMENT
                         [
                             label: OBJECT
                             {
-								labelID: STRING
+                                labelID: STRING
                                 labelName: STRING
                                 labelColor: STRING
                                 labelTextColor: STRING
@@ -33,4 +40,3 @@ DOCUMENT
             }
         ]
     user: STRING
-	

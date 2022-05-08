@@ -7,6 +7,7 @@ import './App.css';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
+import NewBoard from './pages/NewBoard/NewBoard';
 
 // components
 import Navbar from './components/Navbar';
@@ -41,6 +42,10 @@ function App() {
           <Route path="/signup">
             {user && <Redirect to="/" />}
             {!user && <Signup />}
+          </Route>
+          <Route path="/new">
+            {!user && <Redirect to="/login" />}
+            {user && <NewBoard />}
           </Route>
         </Switch>
       </BrowserRouter>
