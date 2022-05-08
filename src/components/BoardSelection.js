@@ -10,6 +10,9 @@ export default function BoardSelection({data}) {
                 <Link to={`/board/${board.boardID}`}>Open this board</Link>
             </div>
         ))}
+        <div style={{padding: "3em"}}>
+            <Link style={{border: "2px solid black", textDecoration: "none", padding: "1em"}} to="/new">Create a new board</Link>
+        </div>
     </div>
   )
 }

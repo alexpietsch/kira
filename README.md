@@ -14,7 +14,7 @@
     Orgranization app
     <br />
     <br />
-    <a href="kira.alexpts.dev">View Demo</a>
+    <a href="https://kira.alexpts.dev">View Demo</a>
     ·
     <a href="https://github.com/alexpietsch/kira/issues">Report Bug</a>
     ·
@@ -30,10 +30,13 @@
 
 Kira is a Drag’n’Drop orgranization app build with React on top of react-beautiful-dnd and Firebase.
 
+![demo gif][kira-gif]
+
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### ⚠️🚧 State
-The App still is in an very early stage (e.g. almost no styling has been done). I recently started learning React and still learn it with this project. The app has a lot of bugs and is not nearly in a usable state.
+The App still is in an very early stage (e.g. almost no styling has been done). I recently started learning React and still learn it with this project. The app has a lot of bugs and is only in a semi-usable state.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -52,7 +55,7 @@ The App still is in an very early stage (e.g. almost no styling has been done). 
 
 ### Prerequisites
 
-* npm
+npm
   ```sh
   npm install npm@latest -g
   ```
@@ -79,10 +82,11 @@ The App still is in an very early stage (e.g. almost no styling has been done). 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Add creation of columns
-- [ ] Add creation of boards
-- [ ] Edit card details when opened
+- [x] Add creation of columns
+- [x] Add creation of boards
+- [ ] Edit and view card details when opened
 - [ ] MD support for description field
+- [ ] Complete Re-design
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -117,6 +121,7 @@ This work is licensed under a
 [cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
 [cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
 [cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
+[kira-gif]: ./kira.gif
 
 See `LICENSE.txt` for more information.
 

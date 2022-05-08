@@ -123,7 +123,7 @@ export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen
             <label>
                 <span>Labels:</span>
                 {showLabelCreator &&
-                    <Modal customWidth={"40%"}> 
+                    <Modal customWidth={"20%"}> 
                         <div className="">
                             <span>Label:</span>
                                 <input
@@ -148,7 +148,7 @@ export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen
                             <br/>
                             <button onClick={handleAdd} className="button-dark labelAdd">add</button>
                         </div>
-                        <button onClick={() => setShowLabelCreator(false)} className="button-dark">close</button>
+                        <button onClick={() => setShowLabelCreator(false)} className="button-dark">Close</button>
                     </Modal>}
             </label>
             <p className="labelWrapper">{cardLabels.map((label) => (

@@ -1,18 +1,22 @@
 import { useEffect, useState, useRef } from "react"
 import { projectFirestore } from "../firebase/config"
 
-export const useCollection = (collection, _query, _orderBy) => {
+export const useCollection = (collection, _query, _user, _orderBy) => {
 
     const [documents, setDocuments] = useState(null)
     const [error, setError] = useState(null)
 
     const query = useRef(_query).current
     const orderBy = useRef(_orderBy).current
+    const user = useRef(_user).current
 
     useEffect(() => {
         let ref = projectFirestore.collection(collection)
 
-        if (query) {
+        if (query && user) {
+            ref = ref.where(...query).where("user", "==", user.uid)
+        }
+        if (query && !user) {
             ref = ref.where(...query)
         }
         if (orderBy) {
