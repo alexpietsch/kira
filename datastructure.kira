@@ -1,6 +1,7 @@
 DOCUMENT
     boardID: STRING
     boardName: STRING
+    boardDescription: STRING
     boardMember: ARRAY
         [
             member: OBJECT

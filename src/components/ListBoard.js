@@ -62,9 +62,12 @@ export default function ListBoard() {
     
     const [boardData, setBoardData] = useState(null)
     const [isTaskAddModalOpen, setIsTaskAddModalOpen] = useState(false)
+    const [isColumnAddOpen, setIsColumnAddOpen] = useState(false)
     const [isCardModalOpen, setIsCardModalOpen] = useState(false)
-
     const [modalActiveColumn, setModalActiveColumn] = useState(null)
+
+    const [newColumnName, setNewColumnName] = useState("")
+
     const fetch = useEffect(() => {
         setBoardData(data)
     }, [data])
@@ -121,9 +124,19 @@ export default function ListBoard() {
         setBoardData(newState)
         updateDocument(boardData.boardID, {columns: newState.columns})
     }
-    /* function handleOpenModal(){
-        
-    } */
+    function handleAddColumn(e){
+        e.preventDefault()
+        const column = { 
+            columnID: uuidv4(),
+            columnName: newColumnName,
+            cards: []
+        }
+        let columns = boardData.columns
+        columns.push(column)
+        updateDocument(boardData.boardID, {columns: columns})
+        setIsColumnAddOpen(false)
+        setNewColumnName("")
+    }
   return (
     <>
     {boardData && <p>Projektname: {boardData.boardName}</p>}
@@ -134,7 +147,7 @@ export default function ListBoard() {
     {isCardModalOpen &&
         <Modal customWidth={"80%"} isCenter={true}>
             <h1>Edit and view card here</h1>
-            <button onClick={() => setIsCardModalOpen(false)}>Close</button>
+            <button onClick={() => setIsCardModalOpen(false)} className="button-dark">Close</button>
         </Modal>}
     <div className="list-container" style={columnWidthDiff}>
         {!error && <>
@@ -149,7 +162,7 @@ export default function ListBoard() {
                                 setIsTaskAddModalOpen(true)
                                 setModalActiveColumn(column.columnID)
                             }}>Add Task</button>
-                            <ul className="con" {...provided.droppableProps} ref={provided.innerRef}>
+                            <ul className="column" {...provided.droppableProps} ref={provided.innerRef}>
                                 {boardData && column.cards.map((card, index) => {
                                         return (
                                             <Draggable key={card.cardID} draggableId={card.cardID} index={index}>
@@ -177,6 +190,19 @@ export default function ListBoard() {
                 </div>
                 ))}
             </DragDropContext>
+            <div className="taskColumn" style={{paddingTop: "4.5em"}}>
+                <button style={{marginBottom: "1.4em"}} onClick={() => setIsColumnAddOpen(true)} className="button-dark">+ New Column</button>
+                {isColumnAddOpen &&
+                    <div className="column">
+                        <form onSubmit={handleAddColumn}>
+                            <label>
+                                <span>Column Name:</span>
+                                <input type="text" placeholder="Column Name" value={newColumnName} onChange={(e) => setNewColumnName(e.target.value)} />
+                            </label>
+                            <button type="submit" className="button-dark">add Column</button>
+                        </form>
+                    </div>}
+            </div>
             </>
         }
     </div>
