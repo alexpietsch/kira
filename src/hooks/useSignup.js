@@ -24,7 +24,6 @@ export const useSignup = () => {
 
             // add display name to user profile
             await response.user.updateProfile({ displayName })
-            console.log(response)
 
             // update Context do be current user
             dispatch({ type: "LOGIN", payload: response.user })
@@ -37,8 +36,7 @@ export const useSignup = () => {
         } catch (err) {
             if(!isCancelled){
                 setIsPending(false)
-                setError(null)
-                console.log(err.message)
+                setError(err.message)
             }
         }
     }

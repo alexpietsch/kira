@@ -27,8 +27,7 @@ export const useLogin = (email, password) => {
         } catch (err) {
             if(!isCancelled){
                 setIsPending(false)
-                setError(null)
-                console.log(err.message)
+                setError(err.message)
             }
         }
     }

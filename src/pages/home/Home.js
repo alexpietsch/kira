@@ -14,6 +14,7 @@ export default function Home() {
       <br />
       {documents && <BoardSelection data={documents} />}
       {!documents && <p>Loading...</p>}
+      {error && <p>{error}</p>}
     </div>
   )
 }
