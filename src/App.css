@@ -31,3 +31,16 @@ body{
   color: #343A40;
   cursor: pointer;
 }
+
+.button-danger{
+  border: 1px solid #D32F2F;
+  background-color: #D32F2F;
+  padding: 5px;
+  margin: 3px;
+  color: #fff;
+}
+.button-danger:hover{
+  background-color: #fff;
+  color: #D32F2F;
+  cursor: pointer;
+}
