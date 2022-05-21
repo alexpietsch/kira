@@ -1,0 +1,31 @@
+.editTaskForm input, textarea{
+    border: none;
+    background: transparent;
+    outline: none;
+} 
+.editTaskForm label span {
+    display: block;
+    margin: 10px 0 10px;
+}
+.editTaskForm .delete-button{
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    padding: 0;
+}
+.editTaskForm .delete-button:hover{
+    cursor: pointer;
+}
+
+
+.labelNameInput, .labelNameInput:active, .labelNameInput:focus{
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    padding: .2em;
+}
+
+.colorPicker{
+    margin-top: .5em;
+}

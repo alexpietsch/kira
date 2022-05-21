@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-//import {ReactComponent as logo} from "./logo.svg";
+import { MdLogout } from "react-icons/md";
 // styles
 import "./Navbar.css"
 
 // hooks
 import { useLogout } from "../hooks/useLogout"
 import { useAuthContext } from "../hooks/useAuthContext"
+
 
 export default function Navbar() {
 
@@ -26,7 +27,7 @@ const { user } = useAuthContext()
             {user && (
                 <>
                     <li>Logged in as {user.displayName}</li>
-                    <li style={{marginLeft: "16px"}}><button className="button-light" onClick={logout}>Logout</button></li>
+                    <li style={{marginLeft: "16px"}}><button className="logoutButton" onClick={logout}><MdLogout /></button></li>
                 </>
             )}
         </ul>

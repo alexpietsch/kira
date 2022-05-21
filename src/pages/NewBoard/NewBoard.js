@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid"
 
 export default function NewBoard() {
     const { user } = useAuthContext()
-    const { addDocumentCustomId, response } = useFirestore("tasks_new_structure")
+    const { addDocumentCustomId } = useFirestore("tasks_new_structure")
     const history = useHistory();
 
     const [boardName, setBoardName] = useState("")

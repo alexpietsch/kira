@@ -38,6 +38,16 @@
     margin-left: 16px;
 }
 
+.logoutButton{
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+}
+.logoutButton:hover{
+    cursor: pointer;
+}
+
 .logo{
     height: auto;
     width: 20px;
