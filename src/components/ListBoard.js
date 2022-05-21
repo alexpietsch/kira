@@ -1,15 +1,31 @@
-// styles
+// hooks
 import { useAuthContext } from "../hooks/useAuthContext"
+import { useCollection } from "../hooks/useCollection"
+import { useFirestore } from "../hooks/useFirestore"
+
+// packages
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { useCollection } from "../hooks/useCollection"
-import { useFirestore } from "../hooks/useFirestore"
-import { useHistory } from "react-router-dom";
-import TaskAdd from "./TaskAdd";
-import "./ListBoard.css"
 import { v4 as uuidv4 } from "uuid"
+import { useHistory } from "react-router-dom";
+
+// components
 import Modal from "./Modal"
+import TaskAdd from "./TaskAdd";
+import TaskEdit from "./TaskEdit"
+
+// icons
+import { 
+    MdModeEditOutline
+ } from "react-icons/md";
+
+// styles
+import "./ListBoard.css"
+
+
+
+
     
     // START-OF handle task movment helper functions
 
@@ -67,9 +83,12 @@ export default function ListBoard() {
     const [isTaskAddModalOpen, setIsTaskAddModalOpen] = useState(false)
     const [isColumnAddOpen, setIsColumnAddOpen] = useState(false)
     const [isCardModalOpen, setIsCardModalOpen] = useState(false)
-    const [modalActiveColumn, setModalActiveColumn] = useState(null)
-    const [showError, setShowError] = useState(false)
     const [showConfirmModal, setShowConfirmModal] = useState(false)
+
+    const [modalActiveColumn, setModalActiveColumn] = useState(null)
+    const [modalActiveCard, setModalActiveCard] = useState(null)
+    const [showError, setShowError] = useState(false)
+
 
     const [newColumnName, setNewColumnName] = useState("")
 
@@ -168,7 +187,8 @@ export default function ListBoard() {
         </Modal>}
     {isCardModalOpen &&
         <Modal customWidth={"80%"} isCenter={true}>
-            <h1>Edit and view card here</h1>
+            <TaskEdit sourceCard={modalActiveCard} sourceColumn={modalActiveColumn} boardData={boardData} setBoardData={setBoardData} />
+            
             <button onClick={() => setIsCardModalOpen(false)} className="button-dark">Close</button>
         </Modal>}
     {isEditColumnOpen &&
@@ -219,7 +239,7 @@ export default function ListBoard() {
                                     setModalActiveColumn(column.columnID)
                                     }} 
                                     className="button-dark">
-                                &#128393;
+                                <MdModeEditOutline />
                             </button>
                         </h2>
                         <Droppable droppableId={column.columnID}>
@@ -234,7 +254,11 @@ export default function ListBoard() {
                                         return (
                                             <Draggable key={card.cardID} draggableId={card.cardID} index={index}>
                                                 {(provided) => (
-                                                    <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} onDoubleClick={() => setIsCardModalOpen(true)}>
+                                                    <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} onDoubleClick={() => {
+                                                        setIsCardModalOpen(true)
+                                                        setModalActiveCard(card)
+                                                        setModalActiveColumn(column.columnID)
+                                                        }}>
                                                         <p>{card.cardName}</p>
                                                         {/* <p>{card.cardDeadline ? console.log(card.cardDeadline.toDate().toString().toLocaleString('en-US')) : null}</p> */}
                                                         <span className="deleteButton" onClick={() => handleDeleteCard(column, card)}>✕</span>

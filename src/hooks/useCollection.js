@@ -35,7 +35,7 @@ export const useCollection = (collection, _query, _user, _orderBy) => {
             setError("Could not fetch the data.")
         })
         return () => unsubscribe()
-    }, [collection, query, orderBy])
+    }, [collection, query, orderBy, user])
 
     return { documents, error }
 

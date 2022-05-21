@@ -4,24 +4,29 @@ import { useFirestore } from "../hooks/useFirestore"
 import { timestamp } from "../firebase/config"
 import { GithubPicker } from 'react-color'
 
-import "./TaskAdd.css"
+// icons
+import { 
+    MdDelete
+ } from "react-icons/md";
+
+import "./TaskEdit.css"
 import Modal from "./Modal"
 
-export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen, sourceColumnID }) {
-
+export default function TaskEdit({ sourceCard: card , sourceColumn: column , boardData, setBoardData}) {
     const [showLabelCreator, setShowLabelCreator] = useState(false)
     const [showConfirmModal, setShowConfirmModal] = useState(false)
 
-    const [cardName, setCardName] = useState("")
-    const [cardWorker, setCardWorker] = useState("")
-    const [deadline, setDeadline] = useState("")
-    const [cardDescription, setCardDescription] = useState("")
-    const [cardLabels, setCardLabels] = useState([])
+    const [cardName, setCardName] = useState(card.cardName)
+    const [cardWorker, setCardWorker] = useState(card.cardWorker)
+    const [deadline, setDeadline] = useState(card.cardDeadline ? card.cardDeadline.toDate().toString().toLocaleString('en-US') : "")
+    const [cardDescription, setCardDescription] = useState(card.cardDescription)
+    const [cardLabels, setCardLabels] = useState(card.cardLabels)
 
     const [newCardLabelName, setNewCardLabelName] = useState("")
     const [newCardLabelNameColor, setNewCardLabelNameColor] = useState("#fff")
     const [newCardLabelColor, setNewCardLabelColor] = useState("#b80000")
     const { updateDocument } = useFirestore("tasks_new_structure")
+
 
     function handleSubmit(e){
         e.preventDefault()
@@ -36,20 +41,20 @@ export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen
         }
         let newBoardData = boardData
         // get column from boardData.columns 
-        const column = newBoardData.columns.find(column => column.columnID === sourceColumnID)
+        const column = newBoardData.columns.find(column => column.columnID === column)
         // add new task to column
         column.cards.push(card)
-        const isTargetColumn = (column) => column.columnID === sourceColumnID
+        const isTargetColumn = (column) => column.columnID === column
         const indexOfColumn = newBoardData.columns.findIndex(isTargetColumn)
         newBoardData.columns[indexOfColumn] = column
         setBoardData(newBoardData)
-        updateDocument(boardData.boardID, {columns: newBoardData.columns})
+        // updateDocument(boardData.boardID, {columns: newBoardData.columns})
         setCardName("")
         setCardWorker("")
         setDeadline("")
         setCardDescription("")
         setCardLabels([])
-        setIsTaskAddModalOpen(false)
+        // setIsTaskAddModalOpen(false)
     }
     function handleAdd(e){
         e.preventDefault()
@@ -69,7 +74,7 @@ export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen
         if(cardName || cardWorker || deadline || cardLabels.length > 0){
             setShowConfirmModal(true)
         } else {
-            setIsTaskAddModalOpen(false)
+            // setIsTaskAddModalOpen(false)
         }
     }
   return (
@@ -77,11 +82,11 @@ export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen
         {showConfirmModal && 
             <Modal customWidth={"30%"}>
                 <h1>Close Window?</h1>
-                <button className="button-dark" onClick={() => setIsTaskAddModalOpen(false)}>Yes</button>
+                {/* <button className="button-dark" onClick={() => setIsTaskAddModalOpen(false)}>Yes</button> */}
                 <button className="button-dark" onClick={() => setShowConfirmModal(false)}>No</button>
             </Modal>}
         
-        <form onSubmit={handleSubmit} className="addTaskForm">
+        <form onSubmit={handleSubmit} className="editTaskForm">
             <label>
                 <span>Taskname:</span>
                 <input 
@@ -152,14 +157,14 @@ export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen
                     </Modal>}
             </label>
             <p className="labelWrapper">{cardLabels.map((label) => (
-                <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}</span>
+                <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}<button className="delete-button" onClick={() => console.log("deleted")} type="button"><MdDelete /></button></span>
             ))}
-                <button className="addLabel" onClick={(e) => {
+                <button className="addLabel" type="button" onClick={(e) => {
                     e.preventDefault()
                     setShowLabelCreator(true)}}>+</button>
             </p>
             <br/>
-            <button className="button-dark">Save Task</button>    
+            <button className="button-dark" type="submit">Save Task</button>    
         </form>
         <button className="button-dark" onClick={() => handleCloseModal()}>Close</button>
     </>
