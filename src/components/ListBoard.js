@@ -80,7 +80,7 @@ export default function ListBoard() {
     const [isEditColumnOpen, setIsEditColumnOpen] = useState(false)
     const [isTaskAddModalOpen, setIsTaskAddModalOpen] = useState(false)
     const [isColumnAddOpen, setIsColumnAddOpen] = useState(false)
-    const [isCardModalOpen, setIsCardModalOpen] = useState(false)
+    const [isTaskEditModalOpen, setIsTaskEditModalOpen] = useState(false)
     const [showConfirmModal, setShowConfirmModal] = useState(false)
 
     const [modalActiveColumn, setModalActiveColumn] = useState(null)
@@ -180,16 +180,17 @@ export default function ListBoard() {
 
     {/* Modals */}
 
-    <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} isTaskAddModalOpen={isTaskAddModalOpen} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />
+    {isTaskAddModalOpen && <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} isTaskAddModalOpen={isTaskAddModalOpen} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />}
+    {isTaskEditModalOpen && <TaskEdit sourceCard={modalActiveCard} sourceColumn={modalActiveColumn} boardData={boardData} setBoardData={setBoardData} isTaskEditModalOpen={isTaskEditModalOpen} setIsTaskEditModalOpen={setIsTaskEditModalOpen}/>}
         {/* <Modal customWidth={"80%"} isCenter={true}>
             <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />
         </Modal>} */}
-    {isCardModalOpen &&
+    {/* {isTaskEditModalOpen && 
         <Modal customWidth={"80%"} isCenter={true}>
-            <TaskEdit sourceCard={modalActiveCard} sourceColumn={modalActiveColumn} boardData={boardData} setBoardData={setBoardData} />
+            <TaskEdit sourceCard={modalActiveCard} sourceColumn={modalActiveColumn} boardData={boardData} setBoardData={setBoardData} isTaskEditModalOpen={isTaskEditModalOpen} setIsTaskEditModalOpen={setIsTaskEditModalOpen}/>
             
             <button onClick={() => setIsCardModalOpen(false)} className="button-dark">Close</button>
-        </Modal>}
+        </Modal>} */}
     {isEditColumnOpen &&
         <Modal customWidth={"80%"} isCenter={true}>
             <h1>Edit and view column here</h1>
@@ -254,7 +255,7 @@ export default function ListBoard() {
                                             <Draggable key={card.cardID} draggableId={card.cardID} index={index}>
                                                 {(provided) => (
                                                     <li className="taskCard" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} onDoubleClick={() => {
-                                                        setIsCardModalOpen(true)
+                                                        setIsTaskEditModalOpen(true)
                                                         setModalActiveCard(card)
                                                         setModalActiveColumn(column.columnID)
                                                         }}>

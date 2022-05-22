@@ -1,15 +1,5 @@
-.addTaskForm label span {
-    display: block;
-    margin: 10px 0 10px;
-}
-
-.labelNameInput, .labelNameInput:active, .labelNameInput:focus{
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    padding: .2em;
-}
-
-.colorPicker{
-    margin-top: .5em;
+.labelPreview{
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
 }
