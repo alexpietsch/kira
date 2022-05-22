@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { MdLogout } from "react-icons/md";
 // styles
 import "./Navbar.css"
 
@@ -7,6 +6,8 @@ import "./Navbar.css"
 import { useLogout } from "../hooks/useLogout"
 import { useAuthContext } from "../hooks/useAuthContext"
 
+// icons
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Navbar() {
 
@@ -27,7 +28,7 @@ const { user } = useAuthContext()
             {user && (
                 <>
                     <li>Logged in as {user.displayName}</li>
-                    <li style={{marginLeft: "16px"}}><button className="logoutButton" onClick={logout}><MdLogout /></button></li>
+                    <li style={{marginLeft: "16px"}}><button className="logoutButton" onClick={logout}><LogoutIcon /></button></li>
                 </>
             )}
         </ul>

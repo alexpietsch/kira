@@ -5,9 +5,7 @@ import { timestamp } from "../firebase/config"
 import { GithubPicker } from 'react-color'
 
 // icons
-import { 
-    MdDelete
- } from "react-icons/md";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import "./TaskEdit.css"
 import Modal from "./Modal"
@@ -157,7 +155,7 @@ export default function TaskEdit({ sourceCard: card , sourceColumn: column , boa
                     </Modal>}
             </label>
             <p className="labelWrapper">{cardLabels.map((label) => (
-                <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}<button className="delete-button" onClick={() => console.log("deleted")} type="button"><MdDelete /></button></span>
+                <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}<button className="delete-button" onClick={() => console.log("deleted")} type="button"><DeleteOutlineIcon /></button></span>
             ))}
                 <button className="addLabel" type="button" onClick={(e) => {
                     e.preventDefault()

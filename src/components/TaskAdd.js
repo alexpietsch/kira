@@ -7,7 +7,14 @@ import { GithubPicker } from 'react-color'
 import "./TaskAdd.css"
 import Modal from "./Modal"
 
-export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen, sourceColumnID }) {
+// MUI components
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+
+export default function TaskAdd({ boardData, setBoardData, isTaskAddModalOpen, setIsTaskAddModalOpen, sourceColumnID }) {
 
     const [showLabelCreator, setShowLabelCreator] = useState(false)
     const [showConfirmModal, setShowConfirmModal] = useState(false)
@@ -81,87 +88,103 @@ export default function TaskAdd({ boardData, setBoardData, setIsTaskAddModalOpen
                 <button className="button-dark" onClick={() => setShowConfirmModal(false)}>No</button>
             </Modal>}
         
-        <form onSubmit={handleSubmit} className="addTaskForm">
-            <label>
-                <span>Taskname:</span>
-                <input 
-                    type="text"
-                    required
-                    onChange={(e) => setCardName(e.target.value)}
-                    value={cardName}
-                />
-            </label>
-            <br/>
-            <label>
-                <span>Bearbeiter:</span>
-                <input 
-                    type="text"
-                    onChange={(e) => setCardWorker(e.target.value)}
-                    value={cardWorker}
-                />
-            </label>
-            <br/>
-            <label>
-                <span>Deadline:</span>
-                <input 
-                    type="date"
-                    onChange={(e) => setDeadline(e.target.value)}
-                    value={deadline}
-                />
-            </label>
-            <label>
-                <span>Description</span>
-                <textarea
-                    onChange={(e) => setCardDescription(e.target.value)}
-                    value={cardDescription}
-                    rows="5"
-                    cols="50"
-                    style={{resize: "none"}}
-                />
-            </label>
-            <br/>
-            <label>
-                <span>Labels:</span>
-                {showLabelCreator &&
-                    <Modal customWidth={"20%"}> 
-                        <div className="">
-                            <span>Label:</span>
-                                <input
-                                    className="labelNameInput"
-                                    type="text"
-                                    onChange={(e) => {
-                                        setNewCardLabelName(e.target.value)
-                                    }}
-                                    value={newCardLabelName}
-                                    style={{backgroundColor: newCardLabelColor, color: newCardLabelNameColor}}
-                                    />
-                            
-                            <GithubPicker
-                                className="colorPicker"
-                                color={newCardLabelColor}
-                                triangle="top-right"
-                                onChangeComplete={(color) => {
-                                    setNewCardLabelColor(color.hex)
-                                    console.log(color.hex);
-                                    color.hsl.l >= 0.5 ?  setNewCardLabelNameColor("#000") : setNewCardLabelNameColor("#fff") 
-                                }} />
-                            <br/>
-                            <button onClick={handleAdd} className="button-dark labelAdd">add</button>
-                        </div>
-                        <button onClick={() => setShowLabelCreator(false)} className="button-dark">Close</button>
-                    </Modal>}
-            </label>
-            <p className="labelWrapper">{cardLabels.map((label) => (
-                <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}</span>
-            ))}
-                <button className="addLabel" onClick={(e) => {
-                    e.preventDefault()
-                    setShowLabelCreator(true)}}>+</button>
-            </p>
-            <br/>
-            <button className="button-dark">Save Task</button>    
-        </form>
-        <button className="button-dark" onClick={() => handleCloseModal()}>Close</button>
+            <Dialog
+                open={isTaskAddModalOpen}
+                onClose={() => setIsTaskAddModalOpen(false)}
+            >
+                <DialogTitle>Add Task</DialogTitle>
+                <DialogContent>
+                    <form className="addTaskForm">
+                        <label>
+                            <span>Taskname:</span>
+                            <input 
+                                type="text"
+                                required
+                                onChange={(e) => setCardName(e.target.value)}
+                                value={cardName}
+                            />
+                        </label>
+                        <br/>
+                        <label>
+                            <span>Bearbeiter:</span>
+                            <input 
+                                type="text"
+                                onChange={(e) => setCardWorker(e.target.value)}
+                                value={cardWorker}
+                            />
+                        </label>
+                        <br/>
+                        <label>
+                            <span>Deadline:</span>
+                            <input 
+                                type="date"
+                                onChange={(e) => setDeadline(e.target.value)}
+                                value={deadline}
+                            />
+                        </label>
+                        <label>
+                            <span>Description</span>
+                            <textarea
+                                onChange={(e) => setCardDescription(e.target.value)}
+                                value={cardDescription}
+                                rows="5"
+                                cols="50"
+                                style={{resize: "none"}}
+                            />
+                        </label>
+                        <br/>
+                        <label>
+                            <span>Labels:</span>
+                            {showLabelCreator &&
+                                <Modal customWidth={"20%"}> 
+                                    <div className="">
+                                        <span>Label:</span>
+                                            <input
+                                                className="labelNameInput"
+                                                type="text"
+                                                onChange={(e) => {
+                                                    setNewCardLabelName(e.target.value)
+                                                }}
+                                                value={newCardLabelName}
+                                                style={{backgroundColor: newCardLabelColor, color: newCardLabelNameColor}}
+                                                />
+                                        
+                                        <GithubPicker
+                                            className="colorPicker"
+                                            color={newCardLabelColor}
+                                            triangle="top-right"
+                                            onChangeComplete={(color) => {
+                                                setNewCardLabelColor(color.hex)
+                                                console.log(color.hex);
+                                                color.hsl.l >= 0.5 ?  setNewCardLabelNameColor("#000") : setNewCardLabelNameColor("#fff") 
+                                            }} />
+                                        <br/>
+                                        <button onClick={handleAdd} className="button-dark labelAdd">add</button>
+                                    </div>
+                                    <button onClick={() => setShowLabelCreator(false)} className="button-dark">Close</button>
+                                </Modal>}
+                        </label>
+                        <p className="labelWrapper">{cardLabels.map((label) => (
+                            <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}</span>
+                        ))}
+                            <button className="addLabel" onClick={(e) => {
+                                e.preventDefault()
+                                setShowLabelCreator(true)}}>+</button>
+                        </p>
+                        <br/>   
+                    </form>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleSubmit}>Save Task</Button>
+                    {/* <button className="button-dark">Save Task</button>  */}
+                    <Button onClick={() => setIsTaskAddModalOpen(false)} color="primary">
+                        Cancel
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+        
+        {/* <button className="button-dark" onClick={() => handleCloseModal()}>Close</button> */}
     </>
   )
 }

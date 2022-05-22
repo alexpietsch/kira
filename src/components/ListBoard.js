@@ -16,9 +16,7 @@ import TaskAdd from "./TaskAdd";
 import TaskEdit from "./TaskEdit"
 
 // icons
-import { 
-    MdModeEditOutline
- } from "react-icons/md";
+import EditIcon from '@mui/icons-material/Edit';
 
 // styles
 import "./ListBoard.css"
@@ -181,10 +179,11 @@ export default function ListBoard() {
     <>
 
     {/* Modals */}
-    {isTaskAddModalOpen && 
-        <Modal customWidth={"80%"} isCenter={true}>
+
+    <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} isTaskAddModalOpen={isTaskAddModalOpen} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />
+        {/* <Modal customWidth={"80%"} isCenter={true}>
             <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />
-        </Modal>}
+        </Modal>} */}
     {isCardModalOpen &&
         <Modal customWidth={"80%"} isCenter={true}>
             <TaskEdit sourceCard={modalActiveCard} sourceColumn={modalActiveColumn} boardData={boardData} setBoardData={setBoardData} />
@@ -239,7 +238,7 @@ export default function ListBoard() {
                                     setModalActiveColumn(column.columnID)
                                     }} 
                                     className="button-dark">
-                                <MdModeEditOutline />
+                                <EditIcon sx={{ fontSize: 15 }} />
                             </button>
                         </h2>
                         <Droppable droppableId={column.columnID}>

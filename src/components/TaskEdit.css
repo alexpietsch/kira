@@ -1,4 +1,4 @@
-.editTaskForm input, textarea{
+.editTaskForm input, .editTaskForm textarea{
     border: none;
     background: transparent;
     outline: none;
