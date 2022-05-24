@@ -8,11 +8,17 @@ import { GithubPicker } from 'react-color'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 // MUI components
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+    //Dialog
+    import Dialog from '@mui/material/Dialog';
+    import DialogActions from '@mui/material/DialogActions';
+    import DialogContent from '@mui/material/DialogContent';
+    import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Stack from "@mui/material/Stack";
 
 import "./TaskEdit.css"
 import Modal from "./Modal"
@@ -20,10 +26,11 @@ import Modal from "./Modal"
 export default function TaskEdit({ sourceCard: card , sourceColumn: column , boardData, setBoardData, isTaskEditModalOpen, setIsTaskEditModalOpen}) {
     const [showLabelCreator, setShowLabelCreator] = useState(false)
     const [showConfirmModal, setShowConfirmModal] = useState(false)
+    const [isEdit, setIsEdit] = useState({state: true, buttonText: "Edit"})
 
     const [cardName, setCardName] = useState(card.cardName)
     const [cardWorker, setCardWorker] = useState(card.cardWorker)
-    const [deadline, setDeadline] = useState(card.cardDeadline ? card.cardDeadline.toDate().toString().toLocaleString('en-US') : "")
+    const [deadline, setDeadline] = useState(card.cardDeadline ? card.cardDeadline.toDate().toString().toLocaleString('en-US') : null)
     const [cardDescription, setCardDescription] = useState(card.cardDescription)
     const [cardLabels, setCardLabels] = useState(card.cardLabels)
 
@@ -33,33 +40,39 @@ export default function TaskEdit({ sourceCard: card , sourceColumn: column , boa
     const { updateDocument } = useFirestore("tasks_new_structure")
 
 
-    function handleSubmit(e){
+    function handleEditButton(e){
         e.preventDefault()
-        const card = {
-            cardID: uuidv4(),
-            cardName,
-            cardWorker,
-            cardDeadline: deadline ? timestamp.fromDate(new Date(deadline)) : null,
-            cardCreated: timestamp.fromDate(new Date()),
-            cardDescription,
-            cardLabels
+
+        if(isEdit.state){
+            setIsEdit({state: false, buttonText: "Save Changes"})
+        } else {
+
+            const card = {
+                cardID: uuidv4(),
+                cardName,
+                cardWorker,
+                cardDeadline: deadline ? timestamp.fromDate(new Date(deadline)) : null,
+                cardCreated: timestamp.fromDate(new Date()),
+                cardDescription,
+                cardLabels
+            }
+            let newBoardData = boardData
+            // get column from boardData.columns 
+            const column = newBoardData.columns.find(column => column.columnID === column)
+            // add new task to column
+            column.cards.push(card)
+            const isTargetColumn = (column) => column.columnID === column
+            const indexOfColumn = newBoardData.columns.findIndex(isTargetColumn)
+            newBoardData.columns[indexOfColumn] = column
+            setBoardData(newBoardData)
+            // updateDocument(boardData.boardID, {columns: newBoardData.columns})
+            setCardName("")
+            setCardWorker("")
+            setDeadline("")
+            setCardDescription("")
+            setCardLabels([])
+            setIsTaskEditModalOpen(false)
         }
-        let newBoardData = boardData
-        // get column from boardData.columns 
-        const column = newBoardData.columns.find(column => column.columnID === column)
-        // add new task to column
-        column.cards.push(card)
-        const isTargetColumn = (column) => column.columnID === column
-        const indexOfColumn = newBoardData.columns.findIndex(isTargetColumn)
-        newBoardData.columns[indexOfColumn] = column
-        setBoardData(newBoardData)
-        // updateDocument(boardData.boardID, {columns: newBoardData.columns})
-        setCardName("")
-        setCardWorker("")
-        setDeadline("")
-        setCardDescription("")
-        setCardLabels([])
-        // setIsTaskEditModalOpen(false)
     }
     function handleAdd(e){
         e.preventDefault()
@@ -79,116 +92,130 @@ export default function TaskEdit({ sourceCard: card , sourceColumn: column , boa
         if(cardName || cardWorker || deadline || cardLabels.length > 0){
             setShowConfirmModal(true)
         } else {
-            // setIsTaskEditModalOpen(false)
+            setIsTaskEditModalOpen(false)
         }
     }
   return (
     <>
-        {showConfirmModal && 
-            <Modal customWidth={"30%"}>
-                <h1>Close Window?</h1>
-                {/* <button className="button-dark" onClick={() => setIsTaskEditModalOpen(false)}>Yes</button> */}
-                <button className="button-dark" onClick={() => setShowConfirmModal(false)}>No</button>
-            </Modal>}
-
-            <Dialog
+        <Dialog
                 open={isTaskEditModalOpen}
                 onClose={() => setIsTaskEditModalOpen(false)}
             >
-                <DialogTitle>Add Task</DialogTitle>
-                <DialogContent>
-                    <form onSubmit={handleSubmit} className="editTaskForm">
+                <DialogTitle>{cardName}</DialogTitle>
+                <DialogContent style={{paddingTop: "10px"}}>
+                    <form >
+                        <Stack spacing={1.5}>
                         <label>
-                            <span>Taskname:</span>
-                            <input 
-                                type="text"
+                            <TextField
+                                className="formInput"
                                 required
+                                label="Taskname"
                                 onChange={(e) => setCardName(e.target.value)}
                                 value={cardName}
+                                size="small"
+                                InputProps={{
+                                    readOnly: isEdit.state
+                                }}
                             />
                         </label>
-                        <br/>
+                        
                         <label>
-                            <span>Bearbeiter:</span>
-                            <input 
-                                type="text"
+                            <TextField
+                                className="formInput"
+                                label="Worker"
                                 onChange={(e) => setCardWorker(e.target.value)}
                                 value={cardWorker}
+                                size="small"
+                                InputProps={{
+                                    readOnly: isEdit.state
+                                }}
                             />
                         </label>
-                        <br/>
+                        
                         <label>
-                            <span>Deadline:</span>
-                            <input 
-                                type="date"
-                                onChange={(e) => setDeadline(e.target.value)}
-                                value={deadline}
-                            />
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DatePicker 
+                                    label="Deadline"
+                                    onChange={(date) => setDeadline(date)}
+                                    value={deadline}
+                                    size="small"
+                                    inputFormat="dd.MM.yyyy"
+                                    mask="__.__.____"
+                                    renderInput={(params) => <TextField {...params} />}
+                                    readOnly={isEdit.state}
+                                    
+                                />
+                            </LocalizationProvider>
                         </label>
                         <label>
-                            <span>Description</span>
-                            <textarea
+                            <TextField
+                                className="formInput"
+                                label="Description"
+                                multiline
+                                rows={4}
                                 onChange={(e) => setCardDescription(e.target.value)}
                                 value={cardDescription}
-                                rows="5"
-                                cols="50"
-                                style={{resize: "none"}}
+                                size="small"
+                                InputProps={{
+                                    readOnly: isEdit.state
+                                }}
                             />
                         </label>
-                        <br/>
+                        
                         <label>
                             <span>Labels:</span>
                             {showLabelCreator &&
-                                <Modal customWidth={"20%"}> 
-                                    <div className="">
-                                        <span>Label:</span>
-                                            <input
-                                                className="labelNameInput"
-                                                type="text"
-                                                onChange={(e) => {
-                                                    setNewCardLabelName(e.target.value)
-                                                }}
+                                <Dialog
+                                open={showLabelCreator}
+                                onClose={() => setShowLabelCreator(false)}
+                                >
+                                    <DialogTitle>Add Label</DialogTitle>
+                                    <DialogContent style={{paddingTop: "10px"}}>
+                                        <div>
+                                            <TextField
+                                                className="formInput"
+                                                required
+                                                label="Label Name"
+                                                onChange={(e) => setNewCardLabelName(e.target.value)}
                                                 value={newCardLabelName}
-                                                style={{backgroundColor: newCardLabelColor, color: newCardLabelNameColor}}
-                                                />
-                                        
-                                        <GithubPicker
-                                            className="colorPicker"
-                                            color={newCardLabelColor}
-                                            triangle="top-right"
-                                            onChangeComplete={(color) => {
-                                                setNewCardLabelColor(color.hex)
-                                                console.log(color.hex);
-                                                color.hsl.l >= 0.5 ?  setNewCardLabelNameColor("#000") : setNewCardLabelNameColor("#fff") 
-                                            }} />
-                                        <br/>
-                                        <button onClick={handleAdd} className="button-dark labelAdd">add</button>
-                                    </div>
-                                    <button onClick={() => setShowLabelCreator(false)} className="button-dark">Close</button>
-                                </Modal>}
+                                                sx={{ color: newCardLabelColor}}
+                                                size="small"
+                                            />
+                                            <p className="label" style={{backgroundColor: newCardLabelColor, color: newCardLabelNameColor }}>{newCardLabelName=="" ? "Label Name" : newCardLabelName}</p>
+                                            <GithubPicker
+                                                className="colorPicker"
+                                                color={newCardLabelColor}
+                                                // triangle="top-left"
+                                                onChangeComplete={(color) => {
+                                                    setNewCardLabelColor(color.hex)
+                                                    color.hsl.l >= 0.5 ?  setNewCardLabelNameColor("#000") : setNewCardLabelNameColor("#fff") 
+                                                }} />
+                                            
+                                        </div>
+                                    </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleAdd}>Add label</Button>
+                                    <Button onClick={() => setShowLabelCreator(false)}>
+                                        Cancel
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>}
                         </label>
                         <p className="labelWrapper">{cardLabels.map((label) => (
-                            <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}<button className="delete-button" onClick={() => console.log("deleted")} type="button"><DeleteOutlineIcon /></button></span>
+                            <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}</span>
                         ))}
-                            <button className="addLabel" type="button" onClick={(e) => {
+                            <button className="addLabel" onClick={(e) => {
                                 e.preventDefault()
                                 setShowLabelCreator(true)}}>+</button>
                         </p>
-                        <br/>
-                        <button className="button-dark" type="submit">Save Task</button>    
+                        </Stack>
                     </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleSubmit}>Save Task</Button>
-                    {/* <button className="button-dark">Save Task</button>  */}
-                    <Button onClick={() => setIsTaskEditModalOpen(false)} color="primary">
-                        Cancel
-                    </Button>
+                    <Button onClick={() => setIsTaskEditModalOpen(false)}>Cancel</Button>
+                    <Button variant="contained" onClick={handleEditButton}>{isEdit.buttonText}</Button>
                 </DialogActions>
             </Dialog>
-        
-        
-        {/* <button className="button-dark" onClick={() => handleCloseModal()}>Close</button> */}
     </>
   )
 }
