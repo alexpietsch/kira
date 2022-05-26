@@ -61,6 +61,6 @@
 }
 
 .column{
-    border: 2px dashed gray;
+    /* border: 2px dashed gray; */
     padding: 1em;
 }
