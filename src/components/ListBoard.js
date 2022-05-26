@@ -18,6 +18,9 @@ import TaskEdit from "./TaskEdit"
 // icons
 import EditIcon from '@mui/icons-material/Edit';
 
+// mui components
+import Box from '@mui/material/Box';
+
 // styles
 import "./ListBoard.css"
 
@@ -86,7 +89,6 @@ export default function ListBoard() {
     const [modalActiveColumn, setModalActiveColumn] = useState(null)
     const [modalActiveCard, setModalActiveCard] = useState(null)
     const [showError, setShowError] = useState(false)
-
 
     const [newColumnName, setNewColumnName] = useState("")
 
@@ -182,15 +184,6 @@ export default function ListBoard() {
 
     {isTaskAddModalOpen && <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} isTaskAddModalOpen={isTaskAddModalOpen} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />}
     {isTaskEditModalOpen && <TaskEdit sourceCard={modalActiveCard} sourceColumn={modalActiveColumn} boardData={boardData} setBoardData={setBoardData} isTaskEditModalOpen={isTaskEditModalOpen} setIsTaskEditModalOpen={setIsTaskEditModalOpen}/>}
-        {/* <Modal customWidth={"80%"} isCenter={true}>
-            <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />
-        </Modal>} */}
-    {/* {isTaskEditModalOpen && 
-        <Modal customWidth={"80%"} isCenter={true}>
-            <TaskEdit sourceCard={modalActiveCard} sourceColumn={modalActiveColumn} boardData={boardData} setBoardData={setBoardData} isTaskEditModalOpen={isTaskEditModalOpen} setIsTaskEditModalOpen={setIsTaskEditModalOpen}/>
-            
-            <button onClick={() => setIsCardModalOpen(false)} className="button-dark">Close</button>
-        </Modal>} */}
     {isEditColumnOpen &&
         <Modal customWidth={"80%"} isCenter={true}>
             <h1>Edit and view column here</h1>
@@ -226,12 +219,14 @@ export default function ListBoard() {
     onClick={() => {
         history.push("/")
     }}>&#8592;</span>
+
     {boardData && <p>Projektname: {boardData.boardName}</p>}
-    <div className="list-container" style={columnWidthDiff}>
+    <Box style={{ width: "100%", overflowX: "auto"}}>
+    <div className="list-container">
         {!error && <>
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 {boardData && boardData.columns.map((column, index) => (
-                    <div key={column.columnID} className="taskColumn" style={columnWidth}>
+                    <div key={column.columnID} className="taskColumn">
                         <h2>
                             {column.columnName}
                             <button onClick={() => {
@@ -302,7 +297,7 @@ export default function ListBoard() {
             </>
         }
     </div>
+    </Box>
     </>
-    
   )
 }
