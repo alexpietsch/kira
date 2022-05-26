@@ -1,18 +1,39 @@
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
+
+// mui components
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+
 
 export default function BoardSelection({data}) {
+  const history = useHistory()
   return (
-    <div>
-        {data.map((board) => (
-            <div key={board.boardID}>
-                <p>{board.boardName}</p>
-                <p>{board.boardID}</p>
-                <Link to={`/board/${board.boardID}`}>Open this board</Link>
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      style={{ minHeight: "60vh" }}
+    >
+      <Grid item xs={3}>
+        <Paper sx={{ width: 320 }}>
+        <MenuList>
+            {data.map((board) => (
+                <MenuItem key={board.boardID} onClick={() => history.push(`/board/${board.boardID}`)}>
+                    <ListItemText primary={board.boardName} />
+                </MenuItem>
+            ))}
+            <div style={{padding: "3em"}}>
+                <Button variant="contained" onClick={() => history.push('/new')}>Create a new board</Button>
             </div>
-        ))}
-        <div style={{padding: "3em"}}>
-            <Link style={{border: "2px solid black", textDecoration: "none", padding: "1em"}} to="/new">Create a new board</Link>
-        </div>
-    </div>
+        </MenuList>
+        </Paper>
+      </Grid>   
+    </Grid> 
   )
 }

@@ -84,7 +84,7 @@ npm
 
 - [x] Add creation of columns
 - [x] Add creation of boards
-- [ ] Edit and view card details when opened
+- [x] Edit and view card details when opened
 - [ ] MD support for description field
 - [ ] Complete Re-design
 

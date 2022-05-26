@@ -137,6 +137,8 @@ export default function TaskAdd({ boardData, setBoardData, isTaskAddModalOpen, s
         <Dialog
             open={isTaskAddModalOpen}
             onClose={() => setIsTaskAddModalOpen(false)}
+            maxWidth="lg"
+            fullWidth={true}
         >
             <DialogTitle>New Task</DialogTitle>
             <DialogContent style={{paddingTop: "10px"}}>
