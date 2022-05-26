@@ -20,6 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 // mui components
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 
 // styles
 import "./ListBoard.css"
@@ -244,6 +245,7 @@ export default function ListBoard() {
                                 setIsTaskAddModalOpen(true)
                                 setModalActiveColumn(column.columnID)
                             }}>Add Task</button>
+                            <Paper elevation={1}>
                             <ul className="column" {...provided.droppableProps} ref={provided.innerRef}>
                                 {boardData && column.cards.map((card, index) => {
                                         return (
@@ -270,6 +272,7 @@ export default function ListBoard() {
                                 })}
                                 {provided.placeholder}
                             </ul>
+                            </Paper>
                         </>
                         )}
                     </Droppable>
