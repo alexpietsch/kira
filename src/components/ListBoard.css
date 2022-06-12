@@ -13,7 +13,7 @@
 
 .taskCard {
     padding: 1em;
-    border: 2px solid black;
+    border: 3px solid;
     background-color: #fff;
     margin-bottom: .5em;
     word-wrap: break-word;
@@ -31,7 +31,11 @@
     top: 0;
     right: 0;
     cursor: pointer;
-    margin-top: -0.3em;
+    margin-top: 0em;
+}
+
+.is-expired{
+    border-color: #f00;
 }
 
 .labelWrapper{
@@ -54,13 +58,6 @@
     max-width: 85px;
 }
 
-
-.taskCard-worker{
-    color: #949494;
-    font-size: 0.8em;
-}
-
 .column{
-    /* border: 2px dashed gray; */
     padding: 1em;
 }
