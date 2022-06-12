@@ -46,17 +46,6 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
         if(isEdit.state){
             setIsEdit({state: false, text: "Save Changes"})
         } else {
-
-            // const card = {
-            //     cardID: uuidv4(),
-            //     cardName,
-            //     cardWorker,
-            //     cardDeadline: deadline ? timestamp.fromDate(new Date(deadline)) : null,
-            //     cardCreated: timestamp.fromDate(new Date()),
-            //     cardDescription,
-            //     cardLabels
-            // }
-
             let newBoardData = boardData
             // get column from boardData.columns 
             let newBoardDataColumn = newBoardData.columns.find(col => col.columnID === sourceColumn)
@@ -72,7 +61,6 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
                 cardDescription,
                 cardLabels
             }
-            console.log(sourceCard, newBoardDataColumnCard);
 
             // insert card to same position in column
             newBoardDataColumn.cards = newBoardDataColumn.cards.map(card => {
