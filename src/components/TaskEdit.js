@@ -28,7 +28,6 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
     const [showLabelCreator, setShowLabelCreator] = useState(false)
     const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [isEdit, setIsEdit] = useState({state: true, text: "Edit"})
-    const [activeLabel, setActiveLabel] = useState(null)
 
     const [cardName, setCardName] = useState(sourceCard.cardName)
     const [cardWorker, setCardWorker] = useState(sourceCard.cardWorker)
@@ -106,9 +105,8 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
         setNewCardLabelNameColor("#fff")
         setShowLabelCreator(false)
     }
-    function handleDeleteLabel(){
-        setCardLabels(cardLabels => cardLabels.filter((label) => label.labelID !== activeLabel))
-        setActiveLabel(null)
+    function handleDeleteLabel(labelID){
+        setCardLabels(cardLabels => cardLabels.filter((label) => label.labelID !== labelID))
     }
     function handleCloseModal(){
         if(cardName || cardWorker || deadline || cardLabels.length > 0){
@@ -229,8 +227,7 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
                         <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>
                             {label.labelName}
                             {!isEdit.state && <span className="deleteButton" onClick={() => {
-                                setActiveLabel(label.labelID)
-                                handleDeleteLabel()
+                                handleDeleteLabel(label.labelID)
                                 }}>
                                     <DeleteOutlineIcon sx={{fontSize: "1.7em"}} />
                             </span>
