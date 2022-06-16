@@ -5,10 +5,7 @@ import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"
 
 // mui components
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
-import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 
 export default function NewBoard() {
