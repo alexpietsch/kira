@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 
+
 export default function BoardSelection({data}) {
   const history = useHistory()
   return (
@@ -24,11 +25,11 @@ export default function BoardSelection({data}) {
         <Paper sx={{ width: 320 }}>
         <MenuList>
             {data.map((board) => (
-                <MenuItem key={board.boardID} onClick={() => history.push(`/board/${board.boardID}`)}>
+                <MenuItem sx={{ padding: ".6em"}} key={board.boardID} onClick={() => history.push(`/board/${board.boardID}`)}>
                     <ListItemText primary={board.boardName} />
                 </MenuItem>
             ))}
-            <div style={{padding: "3em"}}>
+            <div style={{padding: "1em"}}>
                 <Button variant="contained" onClick={() => history.push('/new')}>Create a new board</Button>
             </div>
         </MenuList>

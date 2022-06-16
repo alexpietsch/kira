@@ -14,7 +14,7 @@
     Orgranization app
     <br />
     <br />
-    <a href="https://kira.alexpts.dev">View Demo</a>
+    <a href="https://kira.alexpts.dev">Open App</a>
     ·
     <a href="https://github.com/alexpietsch/kira/issues">Report Bug</a>
     ·
@@ -36,7 +36,7 @@ Kira is a Drag’n’Drop orgranization app build with React on top of react-bea
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### ⚠️🚧 State
-The App still is in an very early stage (e.g. almost no styling has been done). I recently started learning React and still learn it with this project. The app has a lot of bugs and is only in a semi-usable state.
+The app is mostly finished. All currently implemented features work and the app is in a usable state. Some features are still missing and may be implemented some time in the future.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -85,8 +85,11 @@ npm
 - [x] Add creation of columns
 - [x] Add creation of boards
 - [x] Edit and view card details when opened
-- [ ] MD support for description field
-- [ ] Complete Re-design
+- [x] Complete Re-design
+- [ ] User management
+- [ ] User avatars
+- [ ] Adding users to boards so multiple users can use one board
+- [ ] _(MD support for description fields)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -13,11 +13,9 @@ export const useLogin = (email, password) => {
     const login = async (email, password) => {
         setError(null)
         setIsPending(true)
-        // sign user out
         try {
             const response = await projectAuth.signInWithEmailAndPassword(email, password)
 
-            // dispatch(update state) logout action
             dispatch({ type: "LOGIN", payload: response.user })
 
             if(!isCancelled){

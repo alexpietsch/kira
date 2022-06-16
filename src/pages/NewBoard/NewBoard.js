@@ -4,6 +4,10 @@ import { useState } from "react"
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"
 
+// mui components
+import Button from "@mui/material/Button";
+import TextField from '@mui/material/TextField';
+
 export default function NewBoard() {
     const { user } = useAuthContext()
     const { addDocumentCustomId } = useFirestore("tasks_new_structure")
@@ -12,8 +16,21 @@ export default function NewBoard() {
     const [boardName, setBoardName] = useState("")
     const [boardDescription, setBoardDescription] = useState("")
 
+    const [isBoardNameError, setBoardNameError] = useState(false)
+    const [boardnameHelperText, setBoardnameHelperText] = useState("")
+
     function handleSubmit(e) {
         e.preventDefault()
+
+        if(boardName.length === 0){
+            setBoardnameHelperText("Boardname is required")
+            setBoardNameError(true)
+            return
+        } else {
+            setBoardnameHelperText("")
+            setBoardNameError(false)
+        }
+
         const board = {
             boardID: uuidv4(),
             boardName,
@@ -31,29 +48,33 @@ export default function NewBoard() {
   return (
     <div>
         <h1>Create a New Board</h1>
-        <form onSubmit={handleSubmit}>
+        <form>
             <label>
-                <span>Boardname:</span>
-                <input
-                    type="text"
+                <TextField
                     required
+                    label="Boardname"
                     onChange={(e) => setBoardName(e.target.value)}
                     value={boardName}
+                    size="small"
+                    sx={{ width: "20vw" }}
+                    error={isBoardNameError}
+                    helperText={boardnameHelperText}
                 />
             </label>
             <br />
             <label>
-                <span>Description:</span>
-                <textarea
+                <TextField
+                    label="Board Description"
                     onChange={(e) => setBoardDescription(e.target.value)}
                     value={boardDescription}
-                    rows="5"
-                    cols="50"
-                    style={{ resize: "none" }}
+                    size="small"
+                    sx={{ width: "30vw", marginTop: "1em" }}
+                    multiline
+                    rows={4}
                 />
             </label>
             <br />
-            <button type="submit" className="button-dark">Create Board</button>
+            <Button type="submit" variant="contained" onClick={handleSubmit} sx={{ margin: "1em" }}>Create Board</Button>
         </form>
     </div>
   )

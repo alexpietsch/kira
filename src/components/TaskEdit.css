@@ -16,3 +16,8 @@
 .colorPicker{
     margin-top: .5em;
 }
+
+.label .deleteButton{
+    cursor: pointer;
+    margin-top: 0em;
+}

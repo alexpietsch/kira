@@ -22,6 +22,7 @@ import Stack from "@mui/material/Stack";
 
 import "./TaskEdit.css"
 import Modal from "./Modal"
+import { fontSize } from "@mui/system"
 
 export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoardData, isTaskEditModalOpen, setIsTaskEditModalOpen}) {
     const [showLabelCreator, setShowLabelCreator] = useState(false)
@@ -103,6 +104,9 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
         setNewCardLabelColor("#b80000")
         setNewCardLabelNameColor("#fff")
         setShowLabelCreator(false)
+    }
+    function handleDeleteLabel(labelID){
+        setCardLabels(cardLabels => cardLabels.filter((label) => label.labelID !== labelID))
     }
     function handleCloseModal(){
         if(cardName || cardWorker || deadline || cardLabels.length > 0){
@@ -220,7 +224,15 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
                         </Dialog>}
                     </label>
                     <p className="labelWrapper">{cardLabels.map((label) => (
-                        <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>{label.labelName}</span>
+                        <span className="label" key={label.labelID} style={{backgroundColor: label.labelColor, color: label.labelTextColor}}>
+                            {label.labelName}
+                            {!isEdit.state && <span className="deleteButton" onClick={() => {
+                                handleDeleteLabel(label.labelID)
+                                }}>
+                                    <DeleteOutlineIcon sx={{fontSize: "1.7em"}} />
+                            </span>
+                            }
+                        </span>
                     ))}
                         <button className="addLabel" onClick={(e) => {
                             e.preventDefault()
