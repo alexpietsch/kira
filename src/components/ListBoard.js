@@ -15,10 +15,12 @@ import TaskAdd from "./TaskAdd"
 import TaskEdit from "./TaskEdit"
 import ColumnEdit from "./ColumnEdit"
 import ConfirmModal from "./ConfirmModal"
+import BoardEdit from "./BoardEdit"
 
 // icons
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 // mui components
 import Box from '@mui/material/Box';
@@ -85,9 +87,13 @@ export default function ListBoard() {
     const [boardData, setBoardData] = useState(null)
 
     const [isEditColumnOpen, setIsEditColumnOpen] = useState(false)
-    const [isTaskAddModalOpen, setIsTaskAddModalOpen] = useState(false)
     const [isColumnAddOpen, setIsColumnAddOpen] = useState(false)
+
+    const [isTaskAddModalOpen, setIsTaskAddModalOpen] = useState(false)
     const [isTaskEditModalOpen, setIsTaskEditModalOpen] = useState(false)
+
+    const [isBoardEditOpen, setIsBoardEditOpen] = useState(false)
+
     const [showCardDeleteConfirmModal, setShowCardDeleteConfirmModal] = useState(false)
 
     const [modalActiveColumn, setModalActiveColumn] = useState(null)
@@ -183,6 +189,7 @@ export default function ListBoard() {
     {isTaskAddModalOpen && <TaskAdd boardData={boardData} sourceColumnID={modalActiveColumn} setBoardData={setBoardData} isTaskAddModalOpen={isTaskAddModalOpen} setIsTaskAddModalOpen={setIsTaskAddModalOpen} />}
     {isTaskEditModalOpen && <TaskEdit sourceCard={modalActiveCard} sourceColumn={modalActiveColumn} boardData={boardData} setBoardData={setBoardData} isTaskEditModalOpen={isTaskEditModalOpen} setIsTaskEditModalOpen={setIsTaskEditModalOpen}/>}
     {isEditColumnOpen && <ColumnEdit boardData={boardData} setBoardData={setBoardData} isEditColumnOpen={isEditColumnOpen} setIsEditColumnOpen={setIsEditColumnOpen} modalActiveColumn={modalActiveColumn} setModalActiveColumn={setModalActiveColumn}/>}
+    {isBoardEditOpen && <BoardEdit boardData={boardData} setBoardData={setBoardData} isBoardEditOpen={isBoardEditOpen} setIsBoardEditOpen={setIsBoardEditOpen}/>}
 
     {showCardDeleteConfirmModal && <ConfirmModal 
         title={"Delete Task?"}
@@ -206,7 +213,13 @@ export default function ListBoard() {
         history.push("/")
     }}>&#8592;</span>
 
-    {boardData && <h2>{boardData.boardName}</h2>}
+    {boardData && <h2>{boardData.boardName}
+        <IconButton onClick={() => {
+            setIsBoardEditOpen(true)
+        }}>
+            <MoreHorizIcon />
+        </IconButton >
+    </h2>}
     <Box style={{ width: "100%", overflowX: "auto"}}>
     <div className="list-container">
         {!error && <>
@@ -214,10 +227,10 @@ export default function ListBoard() {
                 {boardData && boardData.columns.map((column, index) => (
                     <div key={column.columnID} className="taskColumn">
                         <h2>
-                            {column.columnName}
-                            <IconButton variant="outlined" onClick={() => {
+                            {column.columnName} ({column.cards.length})
+                            <IconButton onClick={() => {
                                     setIsEditColumnOpen(true)
-                                    setModalActiveColumn(column.columnID)
+                                    setModalActiveColumn(column)
                                     }}>
                                 <EditIcon sx={{ fontSize: 15 }} />
                             </IconButton>
