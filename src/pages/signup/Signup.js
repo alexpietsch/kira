@@ -65,7 +65,7 @@ export default function Signup() {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             size="small"
-            sx={{ width: "20vw" }}
+            sx={{ width: "75%", maxWidth: "300px" }}
             error={isEmailError}
             helperText={emailHelperText}
           />
@@ -78,7 +78,7 @@ export default function Signup() {
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
             size="small"
-            sx={{ width: "20vw", marginTop: "1em" }}
+            sx={{ width: "75%", maxWidth: "300px", marginTop: "1em" }}
             error={isDisplayNameError}
             helperText={displayNameHelperText}
             type="email"
@@ -92,7 +92,7 @@ export default function Signup() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             size="small"
-            sx={{ width: "20vw", marginTop: "1em" }}
+            sx={{ width: "75%", maxWidth: "300px", marginTop: "1em" }}
             error={isPasswordError}
             helperText={passwordHelperText}
             type="password"
