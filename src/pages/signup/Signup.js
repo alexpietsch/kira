@@ -35,10 +35,10 @@ export default function Signup() {
 
     if(displayName.length === 0){
       setIsDisplayNameError(true)
-      setDisplayNameHelperText("Display Name is required")
+      setDisplayNameHelperText("Email is required")
     } else {
       setIsDisplayNameError(false)
-      setDisplayName("")
+      setDisplayNameHelperText("")
     }
 
     if(password.length === 0){
@@ -49,17 +49,22 @@ export default function Signup() {
       setPasswordHelperText("")
     }
 
-    if(email.length === 0 || displayName.length || password.length === 0) return
+    if(email.length === 0 || password.length === 0 || displayName.length === 0) return
 
-    signup(email, password, displayName)
+    try {
+      signup(email, password, displayName)
+    } catch(err) {
+      console.error(err.message)
+      return
+    }
   }
 
   return (
     <div>
-        <h1>Signup</h1>
-        <form>
-            <label>
-        <TextField
+      <h1>Signup</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <TextField
             required
             label="E-mail"
             onChange={(e) => setEmail(e.target.value)}
@@ -69,9 +74,9 @@ export default function Signup() {
             error={isEmailError}
             helperText={emailHelperText}
           />
-      </label>
+        </label>
       <br />
-      <label>
+        <label>
           <TextField
             label="Display Name"
             required
@@ -81,11 +86,11 @@ export default function Signup() {
             sx={{ width: "75%", maxWidth: "300px", marginTop: "1em" }}
             error={isDisplayNameError}
             helperText={displayNameHelperText}
-            type="email"
+            type="text"
           />
-      </label>
+        </label>
       <br />
-      <label>
+        <label>
           <TextField
             label="Password"
             required
@@ -97,9 +102,9 @@ export default function Signup() {
             helperText={passwordHelperText}
             type="password"
           />
-      </label>
+        </label>
       <br />
-      {!isPending && <Button variant="contained" onClick={handleSubmit} sx={{ margin: "1em" }}>Signup</Button>}
+      {!isPending && <Button type="submit" variant="contained" sx={{ margin: "1em" }}>Signup</Button>}
       {isPending && <Button variant="contained" disabled sx={{ margin: "1em" }}>loading</Button>}
       {error && <p>{error}</p>}
     </form>
