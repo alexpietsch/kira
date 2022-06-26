@@ -1,6 +1,6 @@
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useFirestore } from "../../hooks/useFirestore";
-import { useState } from "react"
+import React, { useState } from "react"
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"
 
@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 
 export default function NewBoard() {
     const { user } = useAuthContext()
-    const { addDocumentCustomId } = useFirestore("tasks_new_structure")
+    const { addDocumentCustomId } = useFirestore("tasks")
     const history = useHistory();
 
     const [boardName, setBoardName] = useState("")

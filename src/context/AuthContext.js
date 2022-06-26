@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import { useEffect } from "react";
 import { projectAuth } from "../firebase/config";
 

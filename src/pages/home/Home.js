@@ -1,12 +1,13 @@
 import BoardSelection from "../../components/BoardSelection";
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useCollection } from "../../hooks/useCollection"
+import React from "react"
 
 export default function Home() {
 
   const { user } = useAuthContext()
   const { documents, error } = useCollection(
-    "tasks_new_structure", 
+    "tasks", 
     ["user", "==", user.uid])
   
   return (
