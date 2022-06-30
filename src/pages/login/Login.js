@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { useLogin } from "../../hooks/useLogin"
 
 // mui components
@@ -49,10 +49,10 @@ export default function Login() {
 
   return (
     <div>
-        <h1>Login</h1>
-        <form>
-            <label>
-        <TextField
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <TextField
             required
             label="E-mail"
             onChange={(e) => setEmail(e.target.value)}
@@ -63,9 +63,9 @@ export default function Login() {
             helperText={emailHelperText}
             type="email"
           />
-      </label>
+        </label>
       <br />
-      <label>
+        <label>
           <TextField
             label="Password"
             required
@@ -77,9 +77,9 @@ export default function Login() {
             helperText={passwordHelperText}
             type="password"
           />
-      </label>
+        </label>
       <br />
-      {!isPending && <Button variant="contained" onClick={handleSubmit} sx={{ margin: "1em" }}>Login</Button>}
+      {!isPending && <Button type="submit" variant="contained" sx={{ margin: "1em" }}>Login</Button>}
       {isPending && <Button variant="contained" disabled sx={{ margin: "1em" }}>loading</Button>}
       {error && <p>{error}</p>}
     </form>

@@ -1,4 +1,5 @@
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import React from "react"
 
 // styles
 import './App.css';
@@ -32,16 +33,16 @@ function App() {
             {user && <Home />}
           </Route>
           <Route path="/board/:id">
-          {!user && <Redirect to="/login" />}
+            {!user && <Redirect to="/login" />}
             {user && <ListBoard />}
           </Route>
           <Route path="/login">
-            {user && <Redirect to="/" />}
             {!user && <Login />}
+            {user && <Redirect to="/" />}
           </Route>
           <Route path="/signup">
-            {user && <Redirect to="/" />}
             {!user && <Signup />}
+            {user && <Redirect to="/" />}
           </Route>
           <Route path="/new">
             {!user && <Redirect to="/login" />}

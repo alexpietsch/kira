@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 // hooks
 import { useFirestore } from "../hooks/useFirestore"
@@ -9,7 +9,6 @@ import ConfirmModal from './ConfirmModal';
 
 // mui components
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
@@ -21,7 +20,7 @@ import TextField from '@mui/material/TextField';
 
 export default function ColumnEdit({ boardData, setBoardData, isBoardEditOpen, setIsBoardEditOpen }) {
 
-    const { changeDocument, deleteDocument } = useFirestore("tasks_new_structure")
+    const { changeDocument, deleteDocument } = useFirestore("tasks")
     
     const history = useHistory()
 

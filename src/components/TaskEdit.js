@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { useFirestore } from "../hooks/useFirestore"
 import { timestamp } from "../firebase/config"
@@ -21,8 +21,6 @@ import TextField from '@mui/material/TextField';
 import Stack from "@mui/material/Stack";
 
 import "./TaskEdit.css"
-import Modal from "./Modal"
-import { fontSize } from "@mui/system"
 
 export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoardData, isTaskEditModalOpen, setIsTaskEditModalOpen}) {
     const [showLabelCreator, setShowLabelCreator] = useState(false)
@@ -38,7 +36,7 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
     const [newCardLabelName, setNewCardLabelName] = useState("")
     const [newCardLabelNameColor, setNewCardLabelNameColor] = useState("#fff")
     const [newCardLabelColor, setNewCardLabelColor] = useState("#b80000")
-    const { updateDocument } = useFirestore("tasks_new_structure")
+    const { updateDocument } = useFirestore("tasks")
 
 
     function handleEditButton(e){

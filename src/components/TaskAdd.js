@@ -1,11 +1,10 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { useFirestore } from "../hooks/useFirestore"
 import { timestamp } from "../firebase/config"
 import { GithubPicker } from 'react-color'
 
 import "./TaskAdd.css"
-import Modal from "./Modal"
 
 // MUI components
     //Dialog
@@ -40,7 +39,7 @@ export default function TaskAdd({ boardData, setBoardData, isTaskAddModalOpen, s
     const [newCardLabelName, setNewCardLabelName] = useState("")
     const [newCardLabelNameColor, setNewCardLabelNameColor] = useState("#fff")
     const [newCardLabelColor, setNewCardLabelColor] = useState("#b80000")
-    const { updateDocument } = useFirestore("tasks_new_structure")
+    const { updateDocument } = useFirestore("tasks")
 
     function handleSubmit(e){
         e.preventDefault()
@@ -213,7 +212,7 @@ export default function TaskAdd({ boardData, setBoardData, isTaskAddModalOpen, s
                                                 error={isLabelNameError}
                                                 helperText={labelHelperText}
                                             />
-                                        <p className="label" style={{backgroundColor: newCardLabelColor, color: newCardLabelNameColor }}>{newCardLabelName=="" ? "Label Name" : newCardLabelName}</p>
+                                        <p className="label" style={{backgroundColor: newCardLabelColor, color: newCardLabelNameColor }}>{newCardLabelName==="" ? "Label Name" : newCardLabelName}</p>
                                         <GithubPicker
                                             className="colorPicker"
                                             color={newCardLabelColor}

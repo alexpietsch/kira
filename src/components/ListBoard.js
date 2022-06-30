@@ -6,7 +6,7 @@ import { useFirestore } from "../hooks/useFirestore"
 // packages
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { useParams } from "react-router-dom"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { useHistory } from "react-router-dom";
 
@@ -72,11 +72,11 @@ export default function ListBoard() {
     const { id } = useParams()
     const history = useHistory();
     const { documents, error } = useCollection(
-        "tasks_new_structure", 
+        "tasks", 
         ["boardID", "==", id],
         user
     )
-    const { updateDocument } = useFirestore("tasks_new_structure")
+    const { updateDocument } = useFirestore("tasks")
 
     let data = null
     if(documents){
