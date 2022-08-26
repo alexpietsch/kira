@@ -14,7 +14,7 @@ export default function Home() {
     <div>
       <br />
       {documents && <BoardSelection data={documents} />}
-      {!documents && <img src="/assets/loading.svg" alt="loading image" style={{width: "50px"}}></img>}
+      {!documents && <img src="/assets/loading.svg" alt="loading" style={{width: "50px"}}></img>}
       {error && <p>{error}</p>}
     </div>
   )

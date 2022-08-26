@@ -9,6 +9,7 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import NewBoard from './pages/NewBoard/NewBoard';
+import UserProfile from './pages/userProfile/UserProfile';
 
 // components
 import Navbar from './components/Navbar';
@@ -47,6 +48,10 @@ function App() {
           <Route path="/new">
             {!user && <Redirect to="/login" />}
             {user && <NewBoard />}
+          </Route>
+          <Route path="/profile">
+            {!user && <Redirect to="/login" />}
+            {user && <UserProfile />}
           </Route>
         </Switch>
       </BrowserRouter>
