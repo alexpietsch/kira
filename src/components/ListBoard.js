@@ -102,7 +102,7 @@ export default function ListBoard() {
 
     const [newColumnName, setNewColumnName] = useState("")
 
-    const fetch = useEffect(() => {
+    useEffect(() => {
         setBoardData(data)
     }, [data])
 

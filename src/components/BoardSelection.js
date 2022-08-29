@@ -35,7 +35,7 @@ export default function BoardSelection({data}) {
             </div>
         </MenuList>
         </Paper>
-      </Grid>   
+      </Grid>
     </Grid> 
   )
 }

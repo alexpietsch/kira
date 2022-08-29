@@ -9,7 +9,7 @@ import React from "react"
 
 // icons
 import LogoutIcon from '@mui/icons-material/Logout';
-import { IconButton, Button, Avatar, Menu, MenuItem, ListItemIcon } from "@mui/material";
+import { IconButton, Button, Avatar, Menu, MenuItem, ListItemIcon, Box } from "@mui/material";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -33,6 +33,9 @@ const handleProfileMenuClose = () => {
         <ul>
             <li><img src="/logo.svg" alt="logo" className="logo"/></li>
             <li className="page-title"><Link to="/" className="text">Kira</Link></li>
+            <Box className="nav-item-container">
+                <li className="nav-item"><Button>Home</Button></li>
+            </Box>
             {!user && (
                 <>
                     
@@ -50,11 +53,10 @@ const handleProfileMenuClose = () => {
                             <Avatar 
                                 sx={{ width: 32, height: 32 }}
                                 alt={user.displayName + " avatar"} 
-                                src={user.photoUrl ? user.photoUrl : "/assets/avatar.png"}
+                                src={user.photoURL ? user.photoURL : "/assets/avatar.png"}
                             />
                         </IconButton>
                     </li>
-                    {/* <li style={{marginLeft: "16px"}}></li> */}
                 </>
             )}
         </ul>
@@ -72,22 +74,22 @@ const handleProfileMenuClose = () => {
                             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                             mt: 1.5,
                             "& .MuiAvatar-root": {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1
+                                width: 32,
+                                height: 32,
+                                ml: -0.5,
+                                mr: 1
                             },
                             "&:before": {
-                            content: '""',
-                            display: "block",
-                            position: "absolute",
-                            top: 0,
-                            right: 14,
-                            width: 10,
-                            height: 10,
-                            bgcolor: "background.paper",
-                            transform: "translateY(-50%) rotate(45deg)",
-                            zIndex: 0
+                                content: '""',
+                                display: "block",
+                                position: "absolute",
+                                top: 0,
+                                right: 14,
+                                width: 10,
+                                height: 10,
+                                bgcolor: "background.paper",
+                                transform: "translateY(-50%) rotate(45deg)",
+                                zIndex: 0
                             }
                         }
                     }}
@@ -99,10 +101,10 @@ const handleProfileMenuClose = () => {
                     <Avatar 
                         sx={{ width: 12, height: 12 }}
                         alt={user.displayName + " avatar"} 
-                        src={user.photoUrl ? user.photoUrl : "/assets/avatar.png"}
+                        src={user.photoURL ? user.photoURL : "/assets/avatar.png"}
                     />  
                 </ListItemIcon>
-                Edit Profile
+                Your Profile
             </MenuItem>
             <MenuItem onClick={logout}>
                 <ListItemIcon>
