@@ -33,9 +33,6 @@ const handleProfileMenuClose = () => {
         <ul>
             <li><img src="/logo.svg" alt="logo" className="logo"/></li>
             <li className="page-title"><Link to="/" className="text">Kira</Link></li>
-            <Box className="nav-item-container">
-                <li className="nav-item"><Button>Home</Button></li>
-            </Box>
             {!user && (
                 <>
                     
