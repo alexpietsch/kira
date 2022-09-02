@@ -53,6 +53,10 @@ function App() {
             {!user && <Redirect to="/login" />}
             {user && <UserProfile />}
           </Route>
+          <Route path="*" >
+            {!user && <Redirect to="/login" />}
+            {user && <Home />}
+          </Route>
         </Switch>
       </BrowserRouter>
       )}
