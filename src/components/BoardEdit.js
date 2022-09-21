@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 // hooks
 import { useFirestore } from "../hooks/useFirestore"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 // components
 import ConfirmModal from './ConfirmModal';
@@ -22,7 +22,7 @@ export default function ColumnEdit({ boardData, setBoardData, isBoardEditOpen, s
 
     const { changeDocument, deleteDocument } = useFirestore("tasks")
     
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [boardName, setBoardName] = useState(boardData.boardName)
@@ -53,7 +53,7 @@ export default function ColumnEdit({ boardData, setBoardData, isBoardEditOpen, s
 
     function handleDeleteBoard(){
         deleteDocument(boardData.boardID)
-        history.push("/")
+        navigate("/")
         // updateDocument(boardData.boardID, {columns: newState.columns})
     }
 

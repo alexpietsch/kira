@@ -73,10 +73,18 @@ export default function EditUserProfile({ open, onClose, setIsSnackBarOpen }) {
                 type="file"
                 onChange={handleFileChange}
             />
+            {/* <Button
+                size='small'
+                variant='outlined'
+                style={{ marginLeft: "20px", marginTop: "10px", maxWidth: "200px" }}
+                color="error"
+                disabled={user.photoURL === null}
+                onClick={}
+                >Delete Avatar</Button> */}
             <Button 
                 size='small'
                 variant='outlined'
-                style={{ marginLeft: "20px", marginTop: "10px", maxWidth: "100px" }}
+                style={{ marginLeft: "20px", marginTop: "10px", maxWidth: "200px" }}
                 disabled={profileImage == null}
                 onClick={handleSubmitProfilePicture}>Submit</Button>
             {profileImageError && <p style={{ marginLeft: "20px" }} className='error'>{profileImageError}</p>}

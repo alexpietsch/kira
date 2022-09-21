@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { projectAuth } from "../firebase/config"
 import { useAuthContext } from "./useAuthContext"
-
+import {useNavigate} from "react-router-dom";
 
 
 export const useLogin = (email, password) => {
@@ -9,6 +9,8 @@ export const useLogin = (email, password) => {
     const [error, setError] = useState(null)
     const [isPending, setIsPending] = useState(false)
     const { dispatch } = useAuthContext()
+
+    let navigate = useNavigate();
 
     const login = async (email, password) => {
         setError(null)
@@ -21,6 +23,7 @@ export const useLogin = (email, password) => {
             if(!isCancelled){
                 setIsPending(false)
                 setError(null)
+                navigate("/")
             }
         } catch (err) {
             if(!isCancelled){

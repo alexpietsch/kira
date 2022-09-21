@@ -1,7 +1,7 @@
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useFirestore } from "../../hooks/useFirestore";
 import React, { useState } from "react"
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"
 
 // mui components
@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField';
 export default function NewBoard() {
     const { user } = useAuthContext()
     const { addDocumentCustomId } = useFirestore("tasks")
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [boardName, setBoardName] = useState("")
     const [boardDescription, setBoardDescription] = useState("")
@@ -42,7 +42,7 @@ export default function NewBoard() {
         setBoardName("")
         setBoardDescription("")
         addDocumentCustomId(board.boardID, board)
-        history.push("/")
+        navigate("/")
     }
 
   return (

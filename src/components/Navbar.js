@@ -4,19 +4,20 @@ import "./Navbar.css"
 // hooks
 import { useLogout } from "../hooks/useLogout"
 import { useAuthContext } from "../hooks/useAuthContext"
-import { useHistory, Link } from "react-router-dom";
-import React from "react"
+import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react"
 
 // icons
 import LogoutIcon from '@mui/icons-material/Logout';
-import { IconButton, Button, Avatar, Menu, MenuItem, ListItemIcon, Box } from "@mui/material";
-import { useState } from "react";
+
+// material ui
+import { IconButton, Button, Avatar, Menu, MenuItem, ListItemIcon } from "@mui/material";
 
 export default function Navbar() {
 
 const { logout } = useLogout()
 const { user } = useAuthContext()
-const history = useHistory();
+const navigate = useNavigate();
 
 const [menuAnchor, setMenuAnchor] = useState(null)
 const open = Boolean(menuAnchor);
@@ -36,8 +37,8 @@ const handleProfileMenuClose = () => {
             {!user && (
                 <>
                     
-                    <li><Button variant="contained" onClick={() => history.push("/login")}>Login</Button></li>
-                    <li style={{marginLeft: "16px"}}><Button variant="contained" onClick={() => history.push("/signup")}>Signup</Button></li>
+                    <li><Button variant="contained" onClick={() => navigate("/login")}>Login</Button></li>
+                    <li style={{marginLeft: "16px"}}><Button variant="contained" onClick={() => navigate("/signup")}>Signup</Button></li>
                 </>
             )}
             {user && (
@@ -93,7 +94,7 @@ const handleProfileMenuClose = () => {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-            <MenuItem onClick={() => history.push("/profile")}>
+            <MenuItem onClick={() => navigate("/profile")}>
                 <ListItemIcon>
                     <Avatar 
                         sx={{ width: 12, height: 12 }}
