@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    background-color: #343A40;
+    width: 100%;
+}
+.container a{
+    color: #fff;
+}
