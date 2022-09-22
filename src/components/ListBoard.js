@@ -203,19 +203,9 @@ export default function ListBoard() {
             setModalActiveColumn(null)
         }} />}
 
-    <IconButton style={{ position: "absolute", top: "100px", left: "5px" }}onClick={() => { navigate("/") }}>
+    <IconButton style={{ position: "absolute", top: "100px", left: "5px" }} onClick={() => { navigate("/") }}>
         <ArrowBackIcon style={{ color: "#000", fontSize: "1.5em" }}/>
     </IconButton>
-    {/*<span style={{
-        position: "absolute",
-        top: "70px",
-        left: "5px",
-        fontSize: "3em",
-        cursor: "pointer"
-    }}
-    onClick={() => {
-        navigate("/")
-    }}>&#8592;</span>*/}
 
     {boardData && <h2>{boardData.boardName}
         <IconButton onClick={() => {
@@ -228,7 +218,7 @@ export default function ListBoard() {
     <div className="list-container">
         {!error && <>
             <DragDropContext onDragEnd={handleOnDragEnd}>
-                {boardData && boardData.columns.map((column, index) => (
+                {boardData && boardData.columns.map((column) => (
                     <div key={column.columnID} className="taskColumn">
                         <h2>
                             {column.columnName} ({column.cards.length})
