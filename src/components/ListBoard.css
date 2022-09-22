@@ -1,5 +1,6 @@
 .list-container{
     display: flex;
+    margin-bottom: 100px;
 }
 .list-container ul{
     list-style: none;
@@ -13,7 +14,8 @@
 
 .taskCard {
     padding: 1em;
-    border: 3px solid;
+    border: 3px solid #575757;
+    border-radius: 4px;
     background-color: #fff;
     margin-bottom: .5em;
     word-wrap: break-word;

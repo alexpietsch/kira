@@ -4,6 +4,8 @@ import { useFirestore } from "../hooks/useFirestore"
 import { timestamp } from "../firebase/config"
 import { GithubPicker } from 'react-color'
 
+import ConfirmModal from "./ConfirmModal"
+
 // icons
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
@@ -107,7 +109,7 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
         setCardLabels(cardLabels => cardLabels.filter((label) => label.labelID !== labelID))
     }
     function handleCloseModal(){
-        if(cardName || cardWorker || deadline || cardLabels.length > 0){
+        if(!isEdit.state){
             setShowConfirmModal(true)
         } else {
             setIsTaskEditModalOpen(false)
@@ -115,9 +117,14 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
     }
   return (
     <>
+        {showConfirmModal && 
+            <ConfirmModal handleYesAction={() => {
+                setShowConfirmModal(false)
+                setIsTaskEditModalOpen(false)
+            }} handleNoAction={() => setShowConfirmModal(false)} title="Close without saving?" message="Do you really want to close without saving?"/>}
         <Dialog
             open={isTaskEditModalOpen}
-            onClose={() => setIsTaskEditModalOpen(false)}
+            onClose={() => handleCloseModal()}
             maxWidth="lg"
             fullWidth={true}
         >
@@ -201,7 +208,7 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
                                             sx={{ color: newCardLabelColor}}
                                             size="small"
                                         />
-                                        <p className="label" style={{backgroundColor: newCardLabelColor, color: newCardLabelNameColor }}>{newCardLabelName=="" ? "Label Name" : newCardLabelName}</p>
+                                        <p className="label" style={{backgroundColor: newCardLabelColor, color: newCardLabelNameColor }}>{newCardLabelName==="" ? "Label Name" : newCardLabelName}</p>
                                         <GithubPicker
                                             className="colorPicker"
                                             color={newCardLabelColor}
@@ -240,7 +247,7 @@ export default function TaskEdit({ sourceCard , sourceColumn, boardData, setBoar
                 </form>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => setIsTaskEditModalOpen(false)}>Cancel</Button>
+                <Button onClick={() => handleCloseModal()}>Cancel</Button>
                 <Button variant="contained" onClick={handleEditButton}>{isEdit.text}</Button>
             </DialogActions>
         </Dialog>

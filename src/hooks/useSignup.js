@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react" 
-import { projectAuth } from '../firebase/config'
+import { projectAuth, projectFirestore } from '../firebase/config'
 import { useAuthContext } from "./useAuthContext"
 
 
@@ -25,8 +25,15 @@ export const useSignup = () => {
             // add display name to user profile
             await response.user.updateProfile({ displayName })
 
+            // create user document
+            await projectFirestore.collection('users').doc(response.user.uid).set({
+                uid: response.user.uid,
+                displayName,
+                photoURL: null
+            })
+
             // update Context do be current user
-            dispatch({ type: "LOGIN", payload: response.user })
+            await dispatch({ type: "LOGIN", payload: response.user })
             
             if(!isCancelled){
                 setIsPending(false)

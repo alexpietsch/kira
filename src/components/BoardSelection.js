@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import React from "react"
 
 // mui components
@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 
 
 export default function BoardSelection({data}) {
-  const history = useHistory()
+  const navigate = useNavigate()
   return (
     <Grid
       container
@@ -26,16 +26,16 @@ export default function BoardSelection({data}) {
         <Paper sx={{ width: 320 }}>
         <MenuList>
             {data.map((board) => (
-                <MenuItem sx={{ padding: ".6em"}} key={board.boardID} onClick={() => history.push(`/board/${board.boardID}`)}>
+                <MenuItem sx={{ padding: ".6em"}} key={board.boardID} onClick={() => navigate(`/board/${board.boardID}`)}>
                     <ListItemText primary={board.boardName} />
                 </MenuItem>
             ))}
             <div style={{padding: "1em"}}>
-                <Button variant="contained" onClick={() => history.push('/new')}>Create a new board</Button>
+                <Button variant="contained" onClick={() => navigate('/new')}>Create a new board</Button>
             </div>
         </MenuList>
         </Paper>
-      </Grid>   
+      </Grid>
     </Grid> 
   )
 }

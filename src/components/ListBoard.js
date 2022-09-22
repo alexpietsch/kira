@@ -8,7 +8,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { useParams } from "react-router-dom"
 import React, { useState, useEffect } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // components
 import TaskAdd from "./TaskAdd"
@@ -28,6 +28,8 @@ import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
+
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // styles
 import "./ListBoard.css"
@@ -59,7 +61,7 @@ import "./ListBoard.css"
         return result;
     };
 
-    // END-OF handle task movment helper functions
+    // END-OF handle task movement helper functions
 
 
 
@@ -70,7 +72,7 @@ export default function ListBoard() {
 
     const { user } = useAuthContext()
     const { id } = useParams()
-    const history = useHistory();
+    const navigate = useNavigate();
     const { documents, error } = useCollection(
         "tasks", 
         ["boardID", "==", id],
@@ -102,14 +104,14 @@ export default function ListBoard() {
 
     const [newColumnName, setNewColumnName] = useState("")
 
-    const fetch = useEffect(() => {
+    useEffect(() => {
         setBoardData(data)
     }, [data])
 
     function handleOnDragEnd(result) {
 
         const { source, destination } = result;
-        // check if the card is dropped outside of the column area
+        // check if the card is dropped outside the column area
         if(!destination){
             return
         } 
@@ -136,13 +138,13 @@ export default function ListBoard() {
             // call move function with the source and destination columns as arrays
             // and the source and destination which are the two droppables
             //
-            // the move function returns an object with the source and destination as attibutes
+            // the move function returns an object with the source and destination as attributes
             // and each of them has an array of cards for their column
             const items = move(sourceColumn.cards, destColumn.cards, source, destination);
             // find the index of the source and destination columns in the columns array
             const indexOfSourceColumn = newState.columns.findIndex((column) => column.columnID === sInd)
             const indexOfDestColumn = newState.columns.findIndex((column) => column.columnID === dInd)
-            // set the cards arrays in both columns in the new state to befor calculated arrays from the move function
+            // set the cards arrays in both columns in the new state to before calculated arrays from the move function
             newState.columns[indexOfSourceColumn].cards = items[ sInd ]
             newState.columns[indexOfDestColumn].cards = items[ dInd ]
         }
@@ -201,17 +203,9 @@ export default function ListBoard() {
             setModalActiveColumn(null)
         }} />}
 
-
-    <span style={{
-        position: "absolute",
-        top: "70px",
-        left: "5px",
-        fontSize: "3em",
-        cursor: "pointer"
-    }}
-    onClick={() => {
-        history.push("/")
-    }}>&#8592;</span>
+    <IconButton style={{ position: "absolute", top: "100px", left: "5px" }} onClick={() => { navigate("/") }}>
+        <ArrowBackIcon style={{ color: "#000", fontSize: "1.5em" }}/>
+    </IconButton>
 
     {boardData && <h2>{boardData.boardName}
         <IconButton onClick={() => {
@@ -224,7 +218,7 @@ export default function ListBoard() {
     <div className="list-container">
         {!error && <>
             <DragDropContext onDragEnd={handleOnDragEnd}>
-                {boardData && boardData.columns.map((column, index) => (
+                {boardData && boardData.columns.map((column) => (
                     <div key={column.columnID} className="taskColumn">
                         <h2>
                             {column.columnName} ({column.cards.length})

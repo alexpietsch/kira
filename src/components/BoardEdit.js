@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 // hooks
 import { useFirestore } from "../hooks/useFirestore"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 // components
 import ConfirmModal from './ConfirmModal';
@@ -22,13 +22,14 @@ export default function ColumnEdit({ boardData, setBoardData, isBoardEditOpen, s
 
     const { changeDocument, deleteDocument } = useFirestore("tasks")
     
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const [showConfirmModal, setShowConfirmModal] = useState(false)
     const [boardName, setBoardName] = useState(boardData.boardName)
+    const [boardDescription, setBoardDescription] = useState(boardData.boardDescription)
     const [isEdit, setIsEdit] = useState({state: true, text: "Edit"})
 
-    function handleEditButton(e){
+    async function handleEditButton(e){
         e.preventDefault()
 
         if(isEdit.state){
@@ -36,15 +37,16 @@ export default function ColumnEdit({ boardData, setBoardData, isBoardEditOpen, s
         } else {
             let newBoardData = boardData
             
-            // update board name
+            // update board data
             newBoardData = {
                 ...newBoardData,
-                boardName: boardName
+                boardName,
+                boardDescription
             }
 
             // update boardData
             setBoardData(newBoardData)
-            changeDocument(boardData.boardID, newBoardData)
+            await changeDocument(boardData.boardID, newBoardData)
 
             setIsEdit({state: true, text: "Edit"})
             setIsBoardEditOpen(false)
@@ -53,7 +55,7 @@ export default function ColumnEdit({ boardData, setBoardData, isBoardEditOpen, s
 
     function handleDeleteBoard(){
         deleteDocument(boardData.boardID)
-        history.push("/")
+        navigate("/")
         // updateDocument(boardData.boardID, {columns: newState.columns})
     }
 
@@ -82,6 +84,20 @@ export default function ColumnEdit({ boardData, setBoardData, isBoardEditOpen, s
                 InputProps={{
                     readOnly: isEdit.state
                 }}
+            />
+            <br />
+
+            <TextField
+                size='small'
+                label="Board Description"
+                value={boardDescription}
+                onChange={(e) => setBoardDescription(e.target.value)}
+                InputProps={{
+                    readOnly: isEdit.state
+                }}
+                multiline
+                rows={4}
+                style={{ marginTop: "16px", width: "100%" }}
             />
             <Box m={2}>
                 <Divider variant='fullWidth'/>
