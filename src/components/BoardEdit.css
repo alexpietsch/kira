@@ -1,0 +1,15 @@
+.BoardEdit_column{
+    padding: 1em;
+    border: 3px solid #575757;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-right: .5em;
+    word-wrap: break-word;
+}
+
+.BoardEdit_container{
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 0;
+    border: 3px solid rgba(175, 175, 175, 0.5);
+}
