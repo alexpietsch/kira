@@ -23,7 +23,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function ColumnEdit({
+export default function BoardEdit({
   boardData,
   setBoardData,
   isBoardEditOpen,
@@ -45,8 +45,12 @@ export default function ColumnEdit({
 
     if (isEdit.state) {
       setIsEdit({ state: false, text: "Save Changes" });
-    } else {
+      return
+    }
+
+    if (!isEdit.state) {
       let newBoardData = boardData;
+      // newBoardData.columns = newColumnOrder.columns;
 
       // update board data
       newBoardData = {
@@ -56,8 +60,8 @@ export default function ColumnEdit({
       };
 
       // update boardData
-      setBoardData(newBoardData);
       await changeDocument(boardData.boardID, newBoardData);
+      setBoardData(newBoardData);
 
       setIsEdit({ state: true, text: "Edit" });
       setIsBoardEditOpen(false);
@@ -70,7 +74,8 @@ export default function ColumnEdit({
     // updateDocument(boardData.boardID, {columns: newState.columns})
   }
 
-  const handleDragEnd = (result) => {
+  function handleDragEnd(result) {
+    let newColumnOrder = boardData;
     const { source, destination } = result;
     // check if the card is dropped outside the area
     if (!destination) {
@@ -85,13 +90,9 @@ export default function ColumnEdit({
       return;
     }
 
-    let newBoardData = boardData;
-
-    const movedElement = boardData.columns.splice(source.index, 1);
-    newBoardData.columns.splice(destination.index, 0, movedElement[0]);
-
-    setBoardData(newBoardData);
-  };
+    const movedElement = newColumnOrder.columns.splice(source.index, 1);
+    newColumnOrder.columns.splice(destination.index, 0, movedElement[0]);
+  }
 
   return (
     <>
@@ -200,8 +201,12 @@ export default function ColumnEdit({
           </Button>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setIsBoardEditOpen(false)} color="primary">
-            Cancel
+          <Button onClick={() => {
+            setIsEdit({ state: true, text: "Edit" });
+            setIsBoardEditOpen(false);
+            }} 
+            color="primary">
+              Cancel
           </Button>
           <Button variant="contained" onClick={handleEditButton}>
             {isEdit.text}
