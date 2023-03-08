@@ -89,7 +89,7 @@ export default function EditUserProfile({ open, onClose, setIsSnackBarOpen }) {
                 onClick={handleSubmitProfilePicture}>Submit</Button>
             {profileImageError && <p style={{ marginLeft: "20px" }} className='error'>{profileImageError}</p>}
             <DialogActions>
-                <Button onClick={() => onClose(false)}>Cancle</Button>
+                <Button onClick={() => onClose(false)}>Cancel</Button>
                 <Button variant='contained' onClick={
                     () => {
                         user.updateProfile({ displayName })
