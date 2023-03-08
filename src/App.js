@@ -29,14 +29,14 @@ function App() {
       {authIsReady && (
         <BrowserRouter>
         <Navbar />
-        <Routes>
-          {user && !user.emailVerified && (
+        {user && !user.emailVerified && (
             <div>
               <h1>Please verify your email.</h1>
               <h2>If you can't find the email, also check you spam folder or</h2>
               <Button>Resend Email</Button>
             </div>
           )}
+        <Routes>
           {user && user.emailVerified && (
             <>
               <Route path="/" element={
