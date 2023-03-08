@@ -28,45 +28,44 @@ function App() {
     <div className="App">
       {authIsReady && (
         <BrowserRouter>
-        <Navbar />
-        {user && !user.emailVerified && (
-            <div>
-              <h1>Please verify your email.</h1>
-              <h2>If you can't find the email, also check you spam folder or</h2>
-              <Button>Resend Email</Button>
-            </div>
-          )}
-        <Routes>
-          {user && user.emailVerified && (
-            <>
-              <Route path="/" element={
-                user ? <Home /> : <Navigate to="/login" />
-              } />
+          <>
+            <Navbar />
+            {user && !user.emailVerified && (
+              <div>
+                <h1>Please verify your email.</h1>
+                <h2>If you can't find the email, also check you spam folder or</h2>
+                <Button>Resend Email</Button>
+              </div>
+            )}
+            {user && user.emailVerified && (
+              <Routes>
+                <Route path="/" element={
+                  <Home />
+                } />
 
-              <Route path="/login" element={
-                user ? <Navigate to="/" /> : <Login />
-              } />
+                <Route path="/login" element={
+                  <Navigate to="/" />
+                } />
 
-              <Route path="/signup" element={
-                user ? <Navigate to="/" /> : <Signup />
-              } />
+                <Route path="/signup" element={
+                  <Navigate to="/" />
+                } />
 
-              <Route path="/board/:id" element={
-                user ? <ListBoard /> : <Navigate to="/login" />
-              } />
+                <Route path="/board/:id" element={
+                  <ListBoard />
+                } />
 
-              <Route path="/new" element={
-                user ? <NewBoard /> : <Navigate to="/login" />
-              } />
+                <Route path="/new" element={
+                  <NewBoard />
+                } />
 
-              <Route path="/profile" element={
-              user ? <UserProfile /> : <Navigate to="/login" />
-              } />
-            </>
-          )}
-
-          {!user && (
-              <>
+                <Route path="/profile" element={
+                  <UserProfile />
+                } />
+              </Routes>
+            )}
+            {!user && (
+              <Routes>
                 <Route path="/login" element={
                   <Login />
                 } />
@@ -78,13 +77,15 @@ function App() {
                 <Route path="*" element={
                   <Navigate to="/login" />
                 } />
-              </>
-          )}
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-      )}
-    </div>
+              </Routes>
+            )}
+
+            <Footer />
+          </>
+        </BrowserRouter>
+      )
+      }
+    </div >
   );
 }
 
