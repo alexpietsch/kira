@@ -74,8 +74,7 @@ export default function BoardEdit({
     // updateDocument(boardData.boardID, {columns: newState.columns})
   }
 
-  function handleDragEnd(result) {
-    let newColumnOrder = boardData;
+  async function handleDragEnd(result) {
     const { source, destination } = result;
     // check if the card is dropped outside the area
     if (!destination) {
@@ -90,8 +89,13 @@ export default function BoardEdit({
       return;
     }
 
+    const newColumnOrder = boardData;
+
     const movedElement = newColumnOrder.columns.splice(source.index, 1);
     newColumnOrder.columns.splice(destination.index, 0, movedElement[0]);
+
+    await changeDocument(boardData.boardID, newColumnOrder);
+    setBoardData(newColumnOrder);
   }
 
   return (
