@@ -310,6 +310,7 @@ export default function TaskEdit({
                     e.preventDefault();
                     setShowLabelCreator(true);
                   }}
+                  disabled={ isEdit.state }
                 >
                   +
                 </button>

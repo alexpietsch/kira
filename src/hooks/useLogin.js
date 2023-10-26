@@ -33,11 +33,29 @@ export const useLogin = (email, password) => {
         }
     }
 
+    const resetUserPassword = async (email) => {
+        setError(null)
+        setIsPending(true)
+        try {
+            await projectAuth.sendPasswordResetEmail(email)
+            if(!isCancelled){
+                setIsPending(false)
+                setError(null)
+                navigate("/")
+            }
+        } catch (err) {
+            if(!isCancelled){
+                setIsPending(false)
+                setError(err.message)
+            }
+        }
+    }
+
     useEffect(() => {
         return () => {
             setIsCancelled(true)
         }
     }, [])
 
-    return { login, error, isPending}
+    return { login, error, isPending, resetUserPassword }
 }

@@ -10,13 +10,20 @@ export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
+  const [resetEmail, setResetEmail] = useState("")
+
   const [isEmailError, setIsEmailError] = useState(false)
   const [emailHelperText, setEmailHelperText] = useState("")
+
+  const [isResetEmailError, setIsResetEmailError] = useState(false)
+  const [resetEmailHelperText, setResetEmailHelperText] = useState("")
 
   const [isPasswordError, setIsPasswordError] = useState(false)
   const [passwordHelperText, setPasswordHelperText] = useState("")
 
-  const { login, error, isPending } = useLogin()
+  const [showResetForm, setShowResetForm] = useState(false)
+
+  const { login, error, isPending, resetUserPassword } = useLogin()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -42,47 +49,91 @@ export default function Login() {
     try {
       login(email, password)
     } catch (err) {
-      console.log(err.message);
+      console.error(err.message);
       return
     }
+  }
+
+  const handleResetPassword = () => {
+    if(resetEmail.length === 0){
+      setIsResetEmailError(true)
+      setResetEmailHelperText("Email is required")
+      return
+    } else {
+      setIsResetEmailError(false)
+      setResetEmailHelperText("")
+    }
+
+    try {
+      resetUserPassword(resetEmail)
+    } catch (err) {
+      console.error(err.message);
+      return
+    }
+
   }
 
   return (
     <div>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <TextField
-            required
-            label="E-mail"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            size="small"
-            sx={{ width: "75%", maxWidth: "300px" }}
-            error={isEmailError}
-            helperText={emailHelperText}
-            type="email"
-          />
-        </label>
-      <br />
-        <label>
-          <TextField
-            label="Password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            size="small"
-            sx={{ width: "75%", maxWidth: "300px", marginTop: "1em" }}
-            error={isPasswordError}
-            helperText={passwordHelperText}
-            type="password"
-          />
-        </label>
-      <br />
-      {!isPending && <Button type="submit" variant="contained" sx={{ margin: "1em" }}>Login</Button>}
-      {isPending && <Button variant="contained" disabled sx={{ margin: "1em" }}>loading</Button>}
-      {error && <p>{error}</p>}
-    </form>
+      {!showResetForm && <>
+        <form onSubmit={handleSubmit}>
+            <label>
+              <TextField
+                required
+                label="E-mail"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                size="small"
+                sx={{ width: "75%", maxWidth: "300px" }}
+                error={isEmailError}
+                helperText={emailHelperText}
+                type="email"
+              />
+            </label>
+          <br />
+            <label>
+              <TextField
+                label="Password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                size="small"
+                sx={{ width: "75%", maxWidth: "300px", marginTop: "1em" }}
+                error={isPasswordError}
+                helperText={passwordHelperText}
+                type="password"
+              />
+            </label>
+          <br />
+          <br />
+          {!isPending && <Button type="submit" variant="contained" sx={{ margin: "1em" }}>Login</Button>}
+          {isPending && <Button variant="contained" disabled sx={{ margin: "1em" }}>loading</Button>}
+          <br />
+          {error && <p>{error}</p>}
+        </form>
+        <button className="link-button" onClick={() => setShowResetForm(true)}>Forgot your password? Reset password</button>
+      </>}
+      {showResetForm && <>
+        <TextField
+          required
+          label="E-mail"
+          onChange={(e) => setResetEmail(e.target.value)}
+          value={resetEmail}
+          size="small"
+          sx={{ width: "75%", maxWidth: "300px" }}
+          error={isResetEmailError}
+          helperText={resetEmailHelperText}
+          type="email"
+        />
+        <br />
+        {!isPending && <Button sx={{ margin: "1em" }} variant="contained" onClick={handleResetPassword}>Send reset email</Button>}
+        {isPending && <Button variant="contained" disabled sx={{ margin: "1em" }}>loading</Button>}
+        {error && <p>{error}</p>}
+        <br />
+        <button className="link-button" onClick={() => setShowResetForm(false)}>Back to login</button>
+      </>}
+    
     </div>
   )
 }
