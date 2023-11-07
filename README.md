@@ -1,5 +1,10 @@
 <div id="top"></div>
 
+# This project has been archived.
+
+In favour of the new, improved version of this app, built with next.js, this project is deprecated. You can check out the new version [here](https://github.com/alexpietsch/kira-next).
+
+---
 
 <!-- PROJECT LOGO -->
 <br />
@@ -22,43 +27,41 @@
   </p>
 </div>
 
-
-
 <!-- ABOUT THE PROJECT -->
-## About The Project
 
+## About The Project
 
 Kira is a Drag’n’Drop orgranization app build with React on top of react-beautiful-dnd and Firebase.
 
 ![demo gif][kira-gif]
 
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### ⚠️🚧 State
+
 The app is mostly finished. All currently implemented features work and the app is in a usable state. Some features are still missing and may be implemented some time in the future.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
 
-* [React.js](https://reactjs.org/)
-* [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)
-* [Firebase](https://firebase.google.com/)
+- [React.js](https://reactjs.org/)
+- [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)
+- [Firebase](https://firebase.google.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 ### Prerequisites
 
 npm
-  ```sh
-  npm install npm@latest -g
-  ```
+
+```sh
+npm install npm@latest -g
+```
 
 ### Installation
 
@@ -77,9 +80,8 @@ npm
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- ROADMAP -->
+
 ## Roadmap
 
 - [x] Add creation of columns
@@ -93,9 +95,8 @@ npm
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -111,9 +112,8 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- LICENSE -->
+
 ## License
 
 This work is licensed under a
@@ -130,9 +130,8 @@ See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- CONTACT -->
+
 ## Contact
 
 Alexander Pietsch - [LinkedIn](https://www.linkedin.com/in/alexander-pietsch-a1525b204) - mail@alexpts.dev
